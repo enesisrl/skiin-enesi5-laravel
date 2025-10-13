@@ -1,0 +1,39 @@
+/.vscode
+.vscode
+/.idea
+.idea
+/node_modules
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+*.sql
+
+private/composer.lock
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+/storage/media-library/temp/
+/backups/
+/resources
