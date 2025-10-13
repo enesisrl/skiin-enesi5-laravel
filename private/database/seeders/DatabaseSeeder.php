@@ -52,19 +52,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ToponymTranslationsTableSeeder::class);
         $this->call(UserTranslationsTableSeeder::class);
         $this->call(NotificationContactsTableSeeder::class);
-        $this->call(AppUsersTableSeeder::class);
-        $this->call(AvatarsTableSeeder::class);
-        $this->call(CdfServicesTableSeeder::class);
-        $this->call(PublicationsTableSeeder::class);
-        $this->call(PushNotificationDevicesTableSeeder::class);
-        $this->call(PushNotificationTranslationsTableSeeder::class);
-        $this->call(PushNotificationValuesTableSeeder::class);
-        $this->call(PushNotificationsTableSeeder::class);
-        $this->call(ShopsTableSeeder::class);
 
-        $this->call(AppLocalizationsSeeder::class);
         $this->call(OtpsTableSeeder::class);
-        $this->call(PushNotificationRecipientsTableSeeder::class);
         $this->call(UserRememberedDevicesTableSeeder::class);
         $this->call(UserTwoFactorMethodsTableSeeder::class);
     }

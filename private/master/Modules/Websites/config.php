@@ -232,7 +232,6 @@ return [
             $form->addField('Address', [
                 'name' => 'sede_legale_address_id',
                 'label' => __('admin::label.sede_legale'),
-                'required' => true,
                 'rules' => [
                     'max:255'
                 ]
@@ -341,6 +340,7 @@ return [
                 'name' => 'social_facebook',
                 'label' => __('admin::label.social_facebook'),
                 'rules' => [
+                    'nullable',
                     'max:255',
                     'url'
                 ]
@@ -350,6 +350,7 @@ return [
                 'name' => 'social_instagram',
                 'label' => __('admin::label.social_instagram'),
                 'rules' => [
+                    'nullable',
                     'max:255',
                     'url'
                 ]
@@ -453,50 +454,6 @@ return [
                     ['email_destination|col:12'],
                     [':separator'],
                     ['smtp_auth_id|col:12'],
-                ]
-            ]);
-
-            $form->addField('Text', [
-                'name' => 'shop_hours',
-                'label' => __('admin::label.hours'),
-                'editor' => 'summernote',
-                'rules' => [
-                    'nullable',
-                ]
-            ]);
-
-            $form->addTab([
-                'label' => __('admin::label.shop_hours'),
-                'content' => [
-                    ['shop_hours|col:12'],
-                ]
-            ]);
-
-            $form->addField('MediaLibrary', [
-                'name' => 'imageFidelity',
-                'label' => __('admin::label.image_fidelity'),
-                'maxNumberOfFiles' => 1,
-                'disableEditImage' => true,
-                'allowedFileTypes' => ['jpg', 'jpeg', 'png'],
-                'help' => __("admin::help.image_fidelity_format_sizes", [
-                    'mime_types' => implode(', ', ['jpg', 'jpeg', 'png']),
-                ])
-            ]);
-
-            $form->addField('Text', [
-                'name' => 'fidelity_text',
-                'label' => __('admin::label.text'),
-                'editor' => 'summernote',
-                'rules' => [
-                    'nullable',
-                ]
-            ]);
-
-            $form->addTab([
-                'label' => __('admin::label.fidelity'),
-                'content' => [
-                    ['imageFidelity|col:6'],
-                    ['fidelity_text|col:12'],
                 ]
             ]);
         },

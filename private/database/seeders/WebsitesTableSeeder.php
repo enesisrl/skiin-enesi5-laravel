@@ -59,8 +59,6 @@ class WebsitesTableSeeder extends Seeder
                 'social_dailymotion' => NULL,
                 'email_destination' => '[{"value":"info@enesi.it"}]',
                 'smtp_auth_id' => '01990e36-071c-7102-8a7f-8fcad3f0e6e5',
-                'shop_hours' => '<p><strong>Negozi</strong><br> Lunedì-Domenica: dalle 9.00 alle 21.00 </p><p><strong>Ipermercato Carrefour</strong><br> Lunedì-Domenica: dalle 8.00 alle 21.00 </p><p><strong>Ristorazione 5° Piano</strong><br> Lunedì-Domenica: 11.30-15.00 e 18.00-22.00 </p><p><strong>Negozi</strong><br> Lunedì-Domenica: dalle 9.00 alle 21.00 </p><p><strong>Ipermercato Carrefour</strong><br> Lunedì-Domenica: dalle 8.00 alle 21.00 </p><p><strong>Ristorazione 5° Piano</strong><br> Lunedì-Domenica: 11.30-15.00 e 18.00-22.00 </p><p><strong>Negozi</strong><br> Lunedì-Domenica: dalle 9.00 alle 21.00 </p><p><strong>Ipermercato Carrefour</strong><br> Lunedì-Domenica: dalle 8.00 alle 21.00 </p><p><strong>Ristorazione 5° Piano</strong><br> Lunedì-Domenica: 11.30-15.00 e 18.00-22.00 </p>',
-                'fidelity_text' => '<h1>La nuova Fidelity Card digitale sta arrivando!</h1><p> Questa sezione sarà disponibile a partire da gennaio 2026 e ti permetterà di gestire comodamente la tua nuova fidelity card direttamente dall’app. </p><p> Ti ricordiamo che puoi continuare ad accumulare punti sulla tua attuale fidelity card fino al 31 dicembre 2025. </p><p> Rimani aggiornato tramite il sito ufficiale, le comunicazioni sull’app e all’interno del centro commerciale. </p>',
                 'created_at' => '2020-12-31 13:22:33',
                 'updated_at' => '2025-09-03 06:14:16',
                 'deleted_at' => NULL,

@@ -182,8 +182,8 @@ return [
             '//cdn.ene.si/master/20/css/themes/layout/header/base/common.css',
             '//cdn.ene.si/master/20/css/themes/layout/header/base/light.css',
             '//cdn.ene.si/master/20/css/themes/layout/header/menu/light.css',
-            '//cdn.ene.si/master/20/css/themes/layout/aside/dark.css',
-            '//cdn.ene.si/master/20/css/themes/layout/brand/dark.css',
+            '//cdn.ene.si/master/20/css/themes/layout/aside/light.css',
+            '//cdn.ene.si/master/20/css/themes/layout/brand/light.css',
             '//cdn.ene.si/master/20/plugins/custom/datatables/datatables.bundle.css',
             '//cdn.ene.si/master/20/plugins/custom/prismjs/prismjs.bundle.css',
             '//cdn.ene.si/master/20/plugins/custom/uppy/uppy.bundle.css',
@@ -193,7 +193,8 @@ return [
             '//cdn.ene.si/bootstrap-colorpicker/2.5.2/css/bootstrap-colorpicker.min.css',
             '//unpkg.com/leaflet@1.9.4/dist/leaflet.css',
             '//cdn.ene.si/jquery.combobox/css/combobox.css',
-            '/assets/master/css/custom.css'
+            '/assets/master/css/custom.css',
+            '/assets/master/css/pers.css'
         ],
         'js' => [
             '//cdn.ene.si/master/20/plugins/global/plugins.bundle.js',

@@ -69,8 +69,6 @@ License: You must have a valid license purchased only from themeforest(the above
                 window.adminConstants = @json(config('master.constants'));
         </script>
 
-        @firebaseConfig
-
         {{-- Global Theme JS Bundle (used by all pages)  --}}
         @foreach(config('metronic.resources.js') as $script)
             <script src="{{ \Master\Facades\Version::get($script) }}" type="text/javascript"></script>

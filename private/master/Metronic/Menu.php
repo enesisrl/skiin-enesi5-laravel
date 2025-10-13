@@ -53,56 +53,9 @@ class Menu extends \Enesisrl\LaravelMasterCore\Metronic\Menu
             ];
         }
 
-        if (Publications::can("read")) {
-            $items[] = ['section' => __('admin::menu.section_contents')];
 
-            if (Shops::can("read")){
-                $items[] = [
-                    'title' => Shops::adminLang('title'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"/><path d="M14 9V8a2 2 0 1 0-4 0v1H8V8a4 4 0 1 1 8 0v1zm0 0V8a2 2 0 1 0-4 0v1H8V8a4 4 0 1 1 8 0v1z" fill="#000" fill-rule="nonzero" opacity=".3"/><path d="M6.847 9h10.306a1 1 0 0 1 .986.836l1.473 8.835A2 2 0 0 1 17.639 21H6.361a2 2 0 0 1-1.973-2.329l1.473-8.835A1 1 0 0 1 6.847 9" fill="#000"/></g></svg></span>',
-                    'page' => Shops::adminRoute('list')
-                ];
-            }
-
-            if (Publications::can("read")){
-                $items[] = [
-                    'title' => Publications::adminLang('title'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"/><path d="M3.523 14.029a1.8 1.8 0 0 1 0-2.535l8.09-7.953a1.8 1.8 0 0 1 1.26-.516h6.454c.993 0 1.798.805 1.798 1.797v6.436c0 .483-.194.945-.538 1.283l-8.077 7.932a1.8 1.8 0 0 1-2.543 0zM16.93 9.017a1.798 1.798 0 1 0 0-3.596 1.798 1.798 0 0 0 0 3.596" fill="#000" fill-rule="nonzero"/></g></svg></span>',
-                    'page' => Publications::adminRoute('list')
-                ];
-            }
-
-            if (CdfServices::can("read")){
-                $items[] = [
-                    'title' => CdfServices::adminLang('title'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"/><path d="m15.95 3.808-2.925 2.925a2 2 0 0 0 0 2.828l1.414 1.414a2 2 0 0 0 2.828 0l2.925-2.925a5.93 5.93 0 0 1-1.517 5.76c-1.83 1.83-4.566 2.206-6.791 1.134l-5.127 5.127a2 2 0 1 1-2.828-2.828l5.127-5.127c-1.072-2.225-.696-4.961 1.133-6.79a5.93 5.93 0 0 1 5.76-1.518" fill="#000"/><path d="m16.657 5.929 1.414 1.414a1 1 0 0 1 0 1.414l-1.38 1.38a1 1 0 0 1-1.414 0l-1.414-1.414a1 1 0 0 1 0-1.414l1.38-1.38a1 1 0 0 1 1.414 0" fill="#000" opacity=".3"/></g></svg></span>',
-                    'page' => CdfServices::adminRoute('list')
-                ];
-            }
-            if (Avatars::can("read")){
-                $items[] = [
-                    'title' => Avatars::adminLang('title'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"/><circle fill="#000" opacity=".3" cx="12" cy="12" r="10"/><path d="M12 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4m-5 5.5c.216-2.983 2.368-4.5 4.99-4.5 2.66 0 4.846 1.433 5.009 4.5.006.122 0 .5-.418.5H7.404c-.14 0-.415-.338-.404-.5" fill="#000" opacity="1"/></g></svg></span>',
-                    'page' => Avatars::adminRoute('list')
-                ];
-            }
-        }
-
-        if (AppUsers::can('read') || Users::can('read')) {
+        if (Users::can('read')) {
             $items[] = ['section' => __('admin::menu.section_users')];
-
-            if (AppUsers::can('read')) {
-                $items[] = [
-                    'title' => AppUsers::adminLang('title_confirmed'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"/><path d="M12 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8" fill="#000" fill-rule="nonzero" opacity=".3"/><path d="M3 20.2c.388-4.773 4.262-7.2 8.983-7.2 4.788 0 8.722 2.293 9.015 7.2.012.195 0 .8-.751.8H3.727c-.25 0-.747-.54-.726-.8" fill="#000" fill-rule="nonzero"/></g></svg></span>',
-                    'page' => AppUsers::adminRoute('app_users_list', ['type' => 'user', 'confirmed' => 1]),
-                ];
-                /*$items[] = [
-                    'title' => AppUsers::adminLang('title_unconfirmed'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"/><path d="M12 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8" fill="#000" fill-rule="nonzero" opacity=".3"/><path d="M3 20.2c.388-4.773 4.262-7.2 8.983-7.2 4.788 0 8.722 2.293 9.015 7.2.012.195 0 .8-.751.8H3.727c-.25 0-.747-.54-.726-.8" fill="#000" fill-rule="nonzero"/></g></svg></span>',
-                    'page' => AppUsers::adminRoute('app_users_list', ['type' => 'user', 'confirmed' => 0]),
-                ];*/
-            }
 
             if (Users::can('read')) {
                 $items[] = [
@@ -123,14 +76,6 @@ class Menu extends \Enesisrl\LaravelMasterCore\Metronic\Menu
                     'title' => Notifications::adminLang('title'),
                     'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><path d="M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z" fill="#000000"/><rect fill="#000000" opacity="0.3" transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519) " x="16.3255682" y="2.94551858" width="3" height="18" rx="1"/></g></svg></span>',
                     'page' => Notifications::adminRoute('list')
-                ];
-            }
-
-            if (PushNotifications::can("read")){
-                $items[] = [
-                    'title' => PushNotifications::adminLang('title'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><path d="M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z" fill="#000000"/><rect fill="#000000" opacity="0.3" transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519) " x="16.3255682" y="2.94551858" width="3" height="18" rx="1"/></g></svg></span>',
-                    'page' => PushNotifications::adminRoute('list')
                 ];
             }
         }
@@ -182,17 +127,10 @@ class Menu extends \Enesisrl\LaravelMasterCore\Metronic\Menu
             $items[] = $item;
         }
 
-        if (ResourcesLang::can("read") || AppLocalizations::can('read')) {
+        if (ResourcesLang::can("read")) {
 
             $items[] = ['section' => __('admin::menu.section_localizations')];
 
-            if (AppLocalizations::can("read")) {
-                $items[] = [
-                    'title' => AppLocalizations::adminLang('title'),
-                    'icon' => '<span class="svg-icon menu-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><path d="M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z" fill="#000000"/><rect fill="#000000" opacity="0.3" transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519) " x="16.3255682" y="2.94551858" width="3" height="18" rx="1"/></g></svg></span>',
-                    'page' => AppLocalizations::adminRoute('list')
-                ];
-            }
 
             if (ResourcesLang::can("read")){
                 $items[] = [

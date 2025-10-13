@@ -21,7 +21,7 @@ return [
     'login_url' => env("LOGIN_URL",null),
     'use_epp' => env("USE_EPP",false),
     'admin' => [
-        'baseurl' => 'admin',
+        'baseurl' => '',
         'superuser_username' => 'info@enesi.it',
         'test_mail_to' => env("TEST_MAIL_TO","technical@enesi.it"),
         'debug_mail_to' => env("DEBUG_MAIL_TO","technical@enesi.it"),
