@@ -68,6 +68,32 @@ return [
             ]
         ],
 
+        'mysql_old' => [
+            'driver' => 'mysql',
+            'url' => env('DB_URL'),
+            'host' => env('DB_HOST_OLD', '127.0.0.1'),
+            'port' => env('DB_PORT_OLD', '3306'),
+            'database' => env('DB_DATABASE_OLD', 'laravel'),
+            'username' => env('DB_USERNAME_OLD', 'root'),
+            'password' => env('DB_PASSWORD_OLD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => env('DB_CHARSET', 'utf8mb4'),
+            'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => env('DB_ENGINE', 'InnoDB ROW_FORMAT=DYNAMIC'),
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'dump' => [
+                'dump_binary_path' => '/usr/bin', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+                'add_extra_option' => '--add-drop-table', // for example '--column_statistics=0'
+            ]
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

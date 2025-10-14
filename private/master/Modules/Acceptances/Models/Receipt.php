@@ -13,7 +13,7 @@ class Receipt extends Model  {
 
     protected $fillable = [
         'acceptance_id',
-        'agency_id',
+        'agency',
         'date',
         'description',
         'price',
