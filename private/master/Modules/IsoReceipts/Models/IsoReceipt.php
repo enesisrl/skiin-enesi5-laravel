@@ -78,12 +78,12 @@ class IsoReceipt extends Model  implements HasMedia {
         $this->created_at = Arr::get($record, 'data_inserimento');
 
         if (Arr::get($record, 'pdf_file')){
-            $this->addMediaFromBase64(base64_decode(Arr::get($record, 'pdf_file')))
+            $this->addMediaFromBase64(Arr::get($record, 'pdf_file'))
                 ->usingFileName($this->id.'.pdf')
                 ->toMediaCollection('pdf_file');
         }
         if (Arr::get($record, 'zpl_file')) {
-            $this->addMediaFromBase64(base64_decode(Arr::get($record, 'zpl_file')))
+            $this->addMediaFromBase64(Arr::get($record, 'zpl_file'))
                 ->usingFileName($this->id . '.zpl')
                 ->toMediaCollection('zpl_file');
         }

@@ -12,18 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('receipts', function (Blueprint $table) {
-            $table->char('id', 36)->primary();
-            $table->char('acceptance_id', 36)->nullable()->index();
-            $table->char('agency_id', 36)->nullable()->index();
+            $table->uuid('id')->primary();
+            $table->uuid('acceptance_id')->nullable()->index();
+            $table->string('agency')->nullable()->index();
             $table->date('date')->nullable()->index();
             $table->text('description')->nullable();
             $table->decimal('price', 10)->nullable();
             $table->timestamp('created_at')->nullable()->index();
             $table->timestamp('updated_at')->nullable()->index();
             $table->softDeletes()->index();
-            $table->string('created_by', 36)->nullable()->index('created_by');
-            $table->string('updated_by', 36)->nullable()->index('updated_by');
-            $table->string('deleted_by', 36)->nullable()->index('deleted_by');
         });
     }
 
