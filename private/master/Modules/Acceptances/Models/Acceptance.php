@@ -151,36 +151,31 @@ class Acceptance extends Model  {
         $table = (new self())->getTable();
 
         $q1 = DB::table(DB::raw("(SELECT DISTINCT brand_1 AS brand_value FROM {$table} WHERE brand_1 IS NOT NULL AND TRIM(brand_1) <> '') t"))
-            ->selectRaw("'brand_1' AS brand_name, t.brand_value, (SELECT a2.brand_1 FROM {$table} a2 WHERE a2.brand_1 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS description");
+            ->selectRaw("t.brand_value, (SELECT a2.brand_1 FROM {$table} a2 WHERE a2.brand_1 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS description, (SELECT a2.created_at FROM {$table} a2 WHERE a2.brand_1 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS last_created_at");
 
         $q2 = DB::table(DB::raw("(SELECT DISTINCT brand_2 AS brand_value FROM {$table} WHERE brand_2 IS NOT NULL AND TRIM(brand_2) <> '') t"))
-            ->selectRaw("'brand_2' AS brand_name, t.brand_value, (SELECT a2.brand_2 FROM {$table} a2 WHERE a2.brand_2 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS description");
+            ->selectRaw("t.brand_value, (SELECT a2.brand_2 FROM {$table} a2 WHERE a2.brand_2 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS description, (SELECT a2.created_at FROM {$table} a2 WHERE a2.brand_2 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS last_created_at");
 
         $q3 = DB::table(DB::raw("(SELECT DISTINCT brand_3 AS brand_value FROM {$table} WHERE brand_3 IS NOT NULL AND TRIM(brand_3) <> '') t"))
-            ->selectRaw("'brand_3' AS brand_name, t.brand_value, (SELECT a2.brand_3 FROM {$table} a2 WHERE a2.brand_3 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS description");
+            ->selectRaw("t.brand_value, (SELECT a2.brand_3 FROM {$table} a2 WHERE a2.brand_3 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS description, (SELECT a2.created_at FROM {$table} a2 WHERE a2.brand_3 = t.brand_value ORDER BY a2.created_at DESC LIMIT 1) AS last_created_at");
 
         $union = $q1->unionAll($q2)->unionAll($q3);
-
         $rows = $union->get();
 
-        $sorted = collect($rows)->sort(function($a, $b) {
-            // primary: description (case-insensitive, trimmed)
-            $da = mb_strtolower(trim((string)$a->description));
-            $db = mb_strtolower(trim((string)$b->description));
-            $d = strcmp($da, $db);
-            if ($d !== 0) {
-                return $d;
-            }
-            // secondary: brand_name
-            $c = strcmp($a->brand_name, $b->brand_name);
-            if ($c !== 0) {
-                return $c;
-            }
-            // tertiary: brand_value
-            return strcmp((string)$a->brand_value, (string)$b->brand_value);
-        })->values();
+        // Raggruppa per brand_value normalizzato (trim+lowercase) e scegli la description con last_created_at più recente
+        $unique = collect($rows)
+            ->groupBy(function($item) {
+                return mb_strtolower(trim((string)$item->brand_value));
+            })
+            ->map(function($group) {
+                $best = collect($group)->sortByDesc('last_created_at')->first();
+                return (object)[
+                    'brand_value' => trim((string)$best->brand_value),
+                    'description' => $best->description
+                ];
+            })->values();
 
-        return $sorted;
+        return $unique;
     }
 
     public static function measuresWithLatestDescriptions()

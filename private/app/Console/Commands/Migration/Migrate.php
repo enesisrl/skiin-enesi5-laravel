@@ -252,7 +252,7 @@ class Migrate extends Command
             ->leftJoin('categoria', 'articolo.id_categoria', '=', 'categoria.id_categoria')
             ->join('accettazione', 'accettazione_resa.id_accettazione', '=', 'accettazione.id_accettazione')
             ->groupBy('accettazione_resa.id')
-            ->orderBy('accettazione_resa.id_accettamento', 'asc')
+            ->orderBy('accettazione_resa.id_accettazione', 'asc')
             ->where('accettazione.data_in', '>=', $tenYearsAgo)
             ->chunk(1000, function($oldProfits) use (&$profitCount) {
                 foreach ($oldProfits as $old) {
