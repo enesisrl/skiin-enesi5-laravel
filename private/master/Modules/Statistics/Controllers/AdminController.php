@@ -18,7 +18,7 @@ class AdminController extends BaseController {
 
     public function usage(Request $request)
     {
-        $searchForm = $this->module->getSearchForm();
+        $searchForm = $this->module->getSearchFormCustom('usage');
 
         $data = Statistics::getUsageStatistics($request->all());
         return $this->module->adminView("index")->with([
@@ -27,6 +27,21 @@ class AdminController extends BaseController {
             'search_section_title' => $this->module->adminLang("usage_search_title"),
             'data' => $data,
             'tableView' => 'usage',
+            'searchForm' => $searchForm
+        ]);
+    }
+
+    public function insurance(Request $request)
+    {
+        $searchForm = $this->module->getSearchFormCustom('insurance');
+
+        $data = Statistics::getInsuranceStatistics($request->all());
+        return $this->module->adminView("index")->with([
+            'page_title' => $this->module->adminLang("insurance"),
+            'title' => $this->module->adminLang("insurance_title"),
+            'search_section_title' => $this->module->adminLang("insurance_search_title"),
+            'data' => $data,
+            'tableView' => 'insurance',
             'searchForm' => $searchForm
         ]);
     }

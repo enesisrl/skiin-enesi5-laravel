@@ -2,13 +2,29 @@
 
 namespace Master\Modules\Statistics\Classes;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
+use Master\Foundation\Form\Form;
 use Master\Foundation\Modules\Crud\Classes\Module as BaseModule;
 use Master\Modules\Acceptances\Models\Acceptance;
 use Illuminate\Support\Facades\DB;
 use Master\Modules\Acceptances\Models\AcceptanceProfit;
 
 class Module extends BaseModule {
+
+    public function getSearchFormCustom($config_name)
+    {
+        if (file_exists(__DIR__."/../SearchForms/".$config_name.".php")) {
+            $config = include __DIR__ . "/../SearchForms/" . $config_name . ".php";
+            if ($this->searchForm === null) {
+                $this->searchForm = new Form();
+                $this->useCallable(Arr::get($config, 'searchForm'), [$this->searchForm]);
+            }
+        }else{
+            $this->searchForm = new Form();
+        }
+        return $this->searchForm;
+    }
 
     protected function makeSortKey($s){
         $s = (string)$s;
@@ -427,6 +443,50 @@ orderType
             // default ordering
             $q->orderBy('days', 'desc')->orderBy('profit', 'desc');
         }
+
+        return $q->get();
+    }
+
+    public function getInsuranceStatistics($params = []){
+
+        $keys = [
+            'search_date_from', 'search_date_to', 'search_duration'
+        ];
+        $hasAny = false;
+        foreach ($keys as $k) {
+            if (array_key_exists($k, $params)) {
+                $val = $params[$k];
+                if (is_array($val)) {
+                    if (!empty($val)) { $hasAny = true; break; }
+                } else {
+                    if ($val !== null && $val !== '') { $hasAny = true; break; }
+                }
+            }
+        }
+        if (!$hasAny) {
+            return null;
+        }
+
+        $q = Acceptance::select([
+            'acceptances.id',
+            'acceptances.date_in',
+            'acceptances.date_out',
+            DB::raw('SUM(acceptances.insurance_price) as amount'),
+            DB::raw('(DATEDIFF(acceptances.date_out,acceptances.date_in) + 1) as duration'),
+            DB::raw('COUNT(*) AS n_acceptances'),
+        ])->where('acceptances.insurance',1)->groupBy('duration');
+
+        if (Arr::get($params, 'search_date_from')) {
+            $q->where('acceptances.date_in', '>=', $params['search_date_from']);
+        }
+        if (Arr::get($params, 'search_date_to')) {
+            $q->where('acceptances.date_out', '<=', $params['search_date_to']);
+        }
+        if (Arr::get($params,'search_duration')){
+            $q->whereRaw('(DATEDIFF(acceptances.date_out,acceptances.date_in) + 1) = ?', [(int)$params['search_duration']]);
+        }
+
+        $q->orderBy('n_acceptances','desc');
 
         return $q->get();
     }
