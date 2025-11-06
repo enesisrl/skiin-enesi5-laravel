@@ -11,6 +11,7 @@ return [
         'registerAdminWebRoutes' => function($module) {
             Route::any('/usage', [\Master\Modules\Statistics\Controllers\AdminController::class, 'usage'])->name('usage');
             Route::any('/insurance', [\Master\Modules\Statistics\Controllers\AdminController::class, 'insurance'])->name('insurance');
+            Route::any('/categories', [\Master\Modules\Statistics\Controllers\AdminController::class, 'categories'])->name('categories');
         }
     ],
 

@@ -491,4 +491,181 @@ orderType
         return $q->get();
     }
 
+    public function getCategoriesStatistics($params = []){
+
+        $keys = [
+            'search_category_id','search_date_from', 'search_date_to', 'search_duration',
+            'search_measure_id','search_brand_id','search_code','search_description','search_year'
+        ];
+        $hasAny = false;
+        foreach ($keys as $k) {
+            if (array_key_exists($k, $params)) {
+                $val = $params[$k];
+                if (is_array($val)) {
+                    if (!empty($val)) { $hasAny = true; break; }
+                } else {
+                    if ($val !== null && $val !== '') { $hasAny = true; break; }
+                }
+            }
+        }
+        if (!$hasAny) {
+            return null;
+        }
+
+        $apModel = new AcceptanceProfit();
+        $aModel = new Acceptance();
+        $apTable = $apModel->getTable();
+        $aTable = $aModel->getTable();
+
+        // category value (id) and description depending on matching slot
+        $categoryValueCase = "CASE " .
+            "WHEN {$apTable}.article_code = {$aTable}.article_1 THEN {$aTable}.category_1 " .
+            "WHEN {$apTable}.article_code = {$aTable}.article_2 THEN {$aTable}.category_2 " .
+            "WHEN {$apTable}.article_code = {$aTable}.article_3 THEN {$aTable}.category_3 " .
+            "ELSE NULL END";
+
+        $categoryDescCase = "CASE " .
+            "WHEN {$apTable}.article_code = {$aTable}.article_1 THEN {$aTable}.category_1_description " .
+            "WHEN {$apTable}.article_code = {$aTable}.article_2 THEN {$aTable}.category_2_description " .
+            "WHEN {$apTable}.article_code = {$aTable}.article_3 THEN {$aTable}.category_3_description " .
+            "ELSE NULL END";
+
+        $q = AcceptanceProfit::join($aTable, function($join) use ($apTable, $aTable) {
+                $join->on("{$apTable}.acceptance_id", '=', "{$aTable}.id")->whereNull("{$aTable}.deleted_at");
+            })
+            ->selectRaw(implode(', ', [
+                "({$categoryValueCase}) AS category",
+                "({$categoryDescCase}) AS category_description",
+                "COUNT(DISTINCT {$apTable}.acceptance_id) AS total_acceptances",
+                "{$aTable}.total_days as duration",
+                "SUM({$apTable}.profit) AS amount",
+            ]));
+
+        // Escludi record senza categoria (NULL o stringa vuota)
+        $q->whereRaw("COALESCE({$categoryValueCase}, '') <> ''");
+
+        // raggruppa per categoria e durata (duration calcolata su acceptances)
+        $q->groupByRaw("({$categoryValueCase}), (DATEDIFF({$aTable}.date_out, {$aTable}.date_in) + 1)");
+
+        // Filtri su date
+        if (!empty($params['search_date_from']) || !empty($params['search_date_to'])) {
+            $from = !empty($params['search_date_from']) ? $params['search_date_from'] : null;
+            $to = !empty($params['search_date_to']) ? $params['search_date_to'] : null;
+            if ($from && $to) {
+                $q->whereBetween("{$aTable}.date_in", [$from, $to]);
+            } elseif ($from) {
+                $q->where("{$aTable}.date_in", ">=", $from);
+            } elseif ($to) {
+                $q->where("{$aTable}.date_in", "<=", $to);
+            }
+        }
+
+        // filtro categoria (applicato solo sullo slot corrispondente)
+        if (isset($params['search_category_id']) && $params['search_category_id'] !== null && $params['search_category_id'] !== '') {
+            $vals = (array)$params['search_category_id'];
+            $q->where(function($qr) use ($vals, $aTable, $apTable) {
+                foreach ($vals as $v) {
+                    $qr->orWhere(function($q2) use ($v, $aTable, $apTable) {
+                        $q2->whereRaw("{$apTable}.article_code = {$aTable}.article_1")->where("{$aTable}.category_1", $v)
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_2")->where("{$aTable}.category_2", $v);
+                           })
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_3")->where("{$aTable}.category_3", $v);
+                           });
+                    });
+                }
+            });
+        }
+
+        // filtro misura
+        if (isset($params['search_measure_id']) && $params['search_measure_id'] !== null && $params['search_measure_id'] !== '') {
+            $vals = (array)$params['search_measure_id'];
+            $q->where(function($qr) use ($vals, $aTable, $apTable) {
+                foreach ($vals as $v) {
+                    $qr->orWhere(function($q2) use ($v, $aTable, $apTable) {
+                        $q2->whereRaw("{$apTable}.article_code = {$aTable}.article_1")->where("{$aTable}.measure_1", $v)
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_2")->where("{$aTable}.measure_2", $v);
+                           })
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_3")->where("{$aTable}.measure_3", $v);
+                           });
+                    });
+                }
+            });
+        }
+
+        // filtro brand
+        if (isset($params['search_brand_id']) && $params['search_brand_id'] !== null && $params['search_brand_id'] !== '') {
+            $vals = (array)$params['search_brand_id'];
+            $q->where(function($qr) use ($vals, $aTable, $apTable) {
+                foreach ($vals as $v) {
+                    $qr->orWhere(function($q2) use ($v, $aTable, $apTable) {
+                        $q2->whereRaw("{$apTable}.article_code = {$aTable}.article_1")->where("{$aTable}.brand_1", $v)
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_2")->where("{$aTable}.brand_2", $v);
+                           })
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_3")->where("{$aTable}.brand_3", $v);
+                           });
+                    });
+                }
+            });
+        }
+
+        // filtro codice articolo
+        if (!empty($params['search_code'])) {
+            $code = $params['search_code'];
+            if (strpos($code, '%') !== false) {
+                $q->where("{$apTable}.article_code", 'like', $code);
+            } else {
+                $q->where("{$apTable}.article_code", 'like', "%{$code}%");
+            }
+        }
+
+        // filtro description (slot-specific)
+        if (!empty($params['search_description'])) {
+            $desc = $params['search_description'];
+            $q->where(function($qr) use ($desc, $aTable, $apTable) {
+                $qr->where(function($q2) use ($desc, $aTable, $apTable) {
+                    $q2->whereRaw("{$apTable}.article_code = {$aTable}.article_1")->where("{$aTable}.article_1_description", 'like', "%{$desc}%");
+                })->orWhere(function($q2) use ($desc, $aTable, $apTable) {
+                    $q2->whereRaw("{$apTable}.article_code = {$aTable}.article_2")->where("{$aTable}.article_2_description", 'like', "%{$desc}%");
+                })->orWhere(function($q2) use ($desc, $aTable, $apTable) {
+                    $q2->whereRaw("{$apTable}.article_code = {$aTable}.article_3")->where("{$aTable}.article_3_description", 'like', "%{$desc}%");
+                });
+            });
+        }
+
+        // filtro anno
+        if (!empty($params['search_year'])) {
+            $vals = (array)$params['search_year'];
+            $q->where(function($qr) use ($vals, $aTable, $apTable) {
+                foreach ($vals as $v) {
+                    $qr->orWhere(function($q2) use ($v, $aTable, $apTable) {
+                        $q2->whereRaw("{$apTable}.article_code = {$aTable}.article_1")->where("{$aTable}.year_1", $v)
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_2")->where("{$aTable}.year_2", $v);
+                           })
+                           ->orWhere(function($q3) use ($v, $aTable, $apTable) {
+                               $q3->whereRaw("{$apTable}.article_code = {$aTable}.article_3")->where("{$aTable}.year_3", $v);
+                           });
+                    });
+                }
+            });
+        }
+
+        // filtro durata su singola acceptance (se richiesto)
+        if (!empty($params['search_duration'])) {
+            $dur = (int)$params['search_duration'];
+            $q->whereRaw("{$aTable}.total_days = ?", [$dur]);
+        }
+
+        // ordina per numero di accettazioni discendente
+        $q->orderBy('duration','desc')->orderBy('total_acceptances','desc');
+
+        return $q->get();
+    }
+
 }

@@ -45,4 +45,19 @@ class AdminController extends BaseController {
             'searchForm' => $searchForm
         ]);
     }
+
+    public function categories(Request $request)
+    {
+        $searchForm = $this->module->getSearchFormCustom('categories');
+
+        $data = Statistics::getCategoriesStatistics($request->all());
+        return $this->module->adminView("index")->with([
+            'page_title' => $this->module->adminLang("categories"),
+            'title' => $this->module->adminLang("categories_title"),
+            'search_section_title' => $this->module->adminLang("categories_search_title"),
+            'data' => $data,
+            'tableView' => 'categories',
+            'searchForm' => $searchForm
+        ]);
+    }
 }
