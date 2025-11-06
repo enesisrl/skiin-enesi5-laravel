@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Master\Foundation\GDPR;
 use Master\Foundation\Modules\Commands\Command;
+use Master\Modules\Acceptances\Models\Acceptance;
 use Master\Modules\AppUsers\Mail\Registration;
 use Master\Modules\AppUsers\Models\AppUser;
 use Master\Modules\ResourcesLang\Models\ResourceLang;
+use Master\Modules\Statistics\Facades\Statistics;
 use Master\Modules\Websites\Facades\Websites;
 use Master\Modules\Websites\Models\Website;
 
@@ -46,16 +48,8 @@ class Test extends Command
      */
     public function handle()
     {
-        $appUser = AppUser::where('username','emanuele@enesi.it')->first();
-        $message = new Registration($appUser);
-        Mail::to('URjWdiQwnPAAfh@dkimvalidator.com')->send($message);
-        /*
-        $consentPid = array(config('gdpr.signup_privacy_info'));
-        $gdpr = new GDPR();
-        $gdpr->auth();
-        $consent = $gdpr->getConsent($appUser->consent_privacy_info);
-        dd($consent);
-        */
-        //$appUser->storeGdpr($consentPid);
+        $data = Statistics::getCategoriesForSelect();
+        dd($data);
+        return 0;
     }
 }

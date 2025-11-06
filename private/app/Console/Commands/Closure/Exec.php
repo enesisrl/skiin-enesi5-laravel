@@ -4,7 +4,9 @@ namespace App\Console\Commands\Closure;
 
 use App\Console\Commands\Closure\Classes\Cloud;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Master\Foundation\Modules\Commands\Command;
+use Master\Modules\Statistics\Facades\Statistics;
 use Master\Modules\Websites\Facades\Websites;
 
 class Exec extends Command
@@ -73,6 +75,16 @@ class Exec extends Command
             }
 
         }
+
+        /* Aggiorna le cache delle statistiche usate nei filtri di ricerca */
+        Cache::store(config('master.website.cache_driver'))->forget('categories');
+        Cache::store(config('master.website.cache_driver'))->forget('measures');
+        Cache::store(config('master.website.cache_driver'))->forget('brands');
+        Cache::store(config('master.website.cache_driver'))->forget('years');
+        Statistics::getCategoriesForSelect();
+        Statistics::getMeasuresForSelect();
+        Statistics::getBrandsForSelect();
+        Statistics::getYearsForSelect();
 
         return self::SUCCESS;
     }

@@ -45,11 +45,14 @@ class Migrate extends Command
 
         $this->info('Inizio migrazione dati...');
 
-        /*
+        // Considera solo accettazioni con data_inserimento maggiore di 10 anni fa
+        $tenYearsAgo = date('Y-m-d', strtotime('-10 years'));
+
+
         // Migrazione accettazione -> Acceptance
         $this->info('Migrazione accettazione...');
         $accCount = 0;
-        DB::connection('mysql_old')->table('accettazione')
+        $query =         DB::connection('mysql_old')->table('accettazione')
             ->select(['accettazione.*',
                 'articolo_1.descrizione as articolo_1_descrizione',
                 'articolo_2.descrizione as articolo_2_descrizione',
@@ -60,6 +63,15 @@ class Migrate extends Command
                 'categoria_1.nome as categoria_1_descrizione',
                 'categoria_2.nome as categoria_2_descrizione',
                 'categoria_3.nome as categoria_3_descrizione',
+                'marca_1.marca as marca_1_nome',
+                'marca_2.marca as marca_2_nome',
+                'marca_3.marca as marca_3_nome',
+                'misura_1.misura as misura_1_descrizione',
+                'misura_2.misura as misura_2_descrizione',
+                'misura_3.misura as misura_3_descrizione',
+                'articolo_1.anno as articolo_1_anno',
+                'articolo_2.anno as articolo_2_anno',
+                'articolo_3.anno as articolo_3_anno',
                 'anagrafe.codice as codice_cliente',
                 'anagrafe.nome as nome_cliente',
                 'anagrafe.cognome as cognome_cliente',
@@ -77,13 +89,19 @@ class Migrate extends Command
                 'peso.descrizione as peso_descrizione',
                 'misura_scarpa.descrizione as misura_scarpa_descrizione',
                 'agenzia.nome as agenzia_nome'
-                ])
-            ->leftJoin('articolo as articolo_1', 'accettazione.id_articolo_1', '=', 'articolo_1.id_articolo')
-            ->leftJoin('articolo as articolo_2', 'accettazione.id_articolo_2', '=', 'articolo_2.id_articolo')
-            ->leftJoin('articolo as articolo_3', 'accettazione.id_articolo_3', '=', 'articolo_3.id_articolo')
+            ])
+            ->leftJoin('articolo as articolo_1', 'accettazione.id_articolo_1', '=', 'articolo_1.codice_art')
+            ->leftJoin('articolo as articolo_2', 'accettazione.id_articolo_2', '=', 'articolo_2.codice_art')
+            ->leftJoin('articolo as articolo_3', 'accettazione.id_articolo_3', '=', 'articolo_3.codice_art')
             ->leftJoin('categoria as categoria_1', 'accettazione.id_categoria_1', '=', 'categoria_1.id_categoria')
             ->leftJoin('categoria as categoria_2', 'accettazione.id_categoria_2', '=', 'categoria_2.id_categoria')
             ->leftJoin('categoria as categoria_3', 'accettazione.id_categoria_3', '=', 'categoria_3.id_categoria')
+            ->leftJoin('marca as marca_1', 'articolo_1.id_marca', '=', 'marca_1.id_marca')
+            ->leftJoin('marca as marca_2', 'articolo_2.id_marca', '=', 'marca_2.id_marca')
+            ->leftJoin('marca as marca_3', 'articolo_3.id_marca', '=', 'marca_3.id_marca')
+            ->leftJoin('misura as misura_1', 'articolo_1.id_misura', '=', 'misura_1.id_misura')
+            ->leftJoin('misura as misura_2', 'articolo_2.id_misura', '=', 'misura_2.id_misura')
+            ->leftJoin('misura as misura_3', 'articolo_3.id_misura', '=', 'misura_3.id_misura')
             ->leftJoin('anagrafe as anagrafe', 'accettazione.id_anagrafe', '=', 'anagrafe.id_anagrafe')
             ->leftJoin('cliente as agenzia', 'accettazione.id_cliente', '=', 'agenzia.id_cliente')
             ->leftJoin('province as province', 'anagrafe.id_provincia', '=', 'province.id_provincia')
@@ -93,7 +111,8 @@ class Migrate extends Command
             ->leftJoin('misura_scarpa', 'accettazione.id_misura_scarpa', '=', 'misura_scarpa.id_misura_scarpa')
             ->groupBy('accettazione.id_accettazione')
             ->orderBy('accettazione.id_accettazione')
-            ->chunk(1000, function($oldAcceptances) use (&$accCount) {
+            ->where('accettazione.data_in', '>=', $tenYearsAgo);
+        $query->chunk(1000, function($oldAcceptances) use (&$accCount) {
                 foreach ($oldAcceptances as $old) {
 
                     $data = [
@@ -114,6 +133,15 @@ class Migrate extends Command
                         'category_1_description' => $old->categoria_1_descrizione,
                         'category_2_description' => $old->categoria_2_descrizione,
                         'category_3_description' => $old->categoria_3_descrizione,
+                        'brand_1' => $old->marca_1_nome,
+                        'brand_2' => $old->marca_2_nome,
+                        'brand_3' => $old->marca_3_nome,
+                        'measure_1' => $old->misura_1_descrizione,
+                        'measure_2' => $old->misura_2_descrizione,
+                        'measure_3' => $old->misura_3_descrizione,
+                        'year_1' => $old->articolo_1_anno,
+                        'year_2' => $old->articolo_2_anno,
+                        'year_3' => $old->articolo_3_anno,
                         'date_in' => $old->data_in,
                         'date_out' => $old->data_out,
                         'site_1' => $old->posto_1,
@@ -183,6 +211,7 @@ class Migrate extends Command
             ->join('accettazione', 'accettazione_materiale.id_accettazione', '=', 'accettazione.id_accettazione')
             ->groupBy('accettazione_materiale.id_accettazione_materiale')
             ->orderBy('accettazione_materiale.id_accettazione', 'asc')
+            ->where('accettazione.data_in', '>=', $tenYearsAgo)
             ->chunk(1000, function($oldMaterials) use (&$matCount) {
                 foreach ($oldMaterials as $old) {
                     if ($old->id_accettazione_materiale) {
@@ -223,7 +252,8 @@ class Migrate extends Command
             ->leftJoin('categoria', 'articolo.id_categoria', '=', 'categoria.id_categoria')
             ->join('accettazione', 'accettazione_resa.id_accettazione', '=', 'accettazione.id_accettazione')
             ->groupBy('accettazione_resa.id')
-            ->orderBy('accettazione_resa.id_accettazione', 'asc')
+            ->orderBy('accettazione_resa.id_accettamento', 'asc')
+            ->where('accettazione.data_in', '>=', $tenYearsAgo)
             ->chunk(1000, function($oldProfits) use (&$profitCount) {
                 foreach ($oldProfits as $old) {
                     $data = [
@@ -257,6 +287,7 @@ class Migrate extends Command
                       'cliente.nome as agenzia_nome'
                 ])->leftJoin('cliente', 'ricevuta.id_cliente', '=', 'cliente.id_cliente')
             ->join('accettazione', 'ricevuta.id_accettazione', '=', 'accettazione.id_accettazione')
+            ->where('accettazione.data_in', '>=', $tenYearsAgo)
             ->orderBy('ricevuta.id_accettazione', 'asc')
             ->groupBy('ricevuta.id_ricevuta')
             ->chunk(1000, function($oldReceipts) use (&$receiptCount) {
@@ -281,7 +312,7 @@ class Migrate extends Command
                 }
             });
         $this->info("Totale ricevute importate: $receiptCount");
-        */
+
         // Migrazione ricevuta_iso -> IsoReceipt
         $this->info('Migrazione ricevuta_iso...');
         $isoCount = 0;
