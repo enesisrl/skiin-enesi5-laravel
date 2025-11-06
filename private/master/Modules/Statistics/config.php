@@ -77,9 +77,9 @@ return [
 
             $searchForm->addField('DateRange', [
                 'name' => 'search.date',
-                'sessionValue' => (isset($sessionValues["date"])) ? $sessionValues["date"] : null,
-                'sessionValueFrom' => (isset($sessionValues["date_from"])) ? $sessionValues["date_from"] : null,
-                'sessionValueTo' => (isset($sessionValues["date_to"])) ? $sessionValues["date_to"] : null,
+                'sessionValue' => (isset($sessionValues["search_date"])) ? $sessionValues["search_date"] : null,
+                'sessionValueFrom' => (isset($sessionValues["search_date_from"])) ? $sessionValues["search_date_from"] : null,
+                'sessionValueTo' => (isset($sessionValues["search_date_to"])) ? $sessionValues["search_date_to"] : null,
                 'label' => __('admin::label.date_range')
             ]);
 

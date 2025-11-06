@@ -48,7 +48,7 @@
             <div class="card card-custom">
                 <div class="card-header flex-wrap py-3">
                     <div class="card-title">
-                        <h3 class="card-label">{!! __('admin::label.equipment') !!}</h3>
+                        <h3 class="card-label">{!! $title !!}</h3>
                     </div>
                     <div class="card-toolbar">
 
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="card-body">
-
+                    @include('StatisticsModule::tables.' . $tableView, ['data' => $data])
                 </div>
             </div>
             <br />

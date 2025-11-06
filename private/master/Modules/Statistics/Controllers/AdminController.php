@@ -23,8 +23,10 @@ class AdminController extends BaseController {
         $data = Statistics::getUsageStatistics($request->all());
         return $this->module->adminView("index")->with([
             'page_title' => $this->module->adminLang("usage"),
+            'title' => $this->module->adminLang("usage_title"),
             'search_section_title' => $this->module->adminLang("usage_search_title"),
             'data' => $data,
+            'tableView' => 'usage',
             'searchForm' => $searchForm
         ]);
     }
