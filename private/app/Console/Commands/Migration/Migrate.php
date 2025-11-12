@@ -435,7 +435,7 @@ class Migrate extends Command
 
     public function getDepositAmount($oldAcceptance, $index)
     {
-        if ($oldAcceptance->{'id_tipologia_'.$index} != '2' || $oldAcceptance->giorni_deposito <= 0){
+        if ($oldAcceptance->{'id_tipologia_'.$index} != '2' || $oldAcceptance->n_giorni < 0){
             return 0;
         }
 
@@ -454,8 +454,8 @@ class Migrate extends Command
             if ($listinoResult->id_listino_elenco){
                 $oltre15giorni = 0;
                 $campo = null;
-                if ($oldAcceptance->giorni_deposito <= 15){
-                    $campo="g".$oldAcceptance->giorni_deposito;
+                if ($oldAcceptance->n_giorni <= 15){
+                    $campo="g".$oldAcceptance->n_giorni;
                 }else{
                     if ($oldAcceptance->stagionale == 1){
                         $campo = "stagionale";
@@ -471,7 +471,7 @@ class Migrate extends Command
                 ->select(DB::raw($campo . ' AS resa'))->first();
                 if ($resa) {
                     if ($oltre15giorni) {
-                        return $resa->g15 + ($resa->resa * ($oldAcceptance->giorni_deposito - 15));
+                        return $resa->g15 + ($resa->resa * ($oldAcceptance->n_giorni - 15));
                     } else {
                         return $resa->resa;
                     }

@@ -51,7 +51,22 @@
                         <h3 class="card-label">{!! $title !!}</h3>
                     </div>
                     <div class="card-toolbar">
-
+                        <form method="post" action="{{ $module->adminRoute($tableView . 'Export') }}" style="display: inline;">
+                            @csrf
+                            @foreach(request()->except(['_token', '_method']) as $key => $value)
+                                @if(is_array($value))
+                                    @foreach($value as $v)
+                                        <input type="hidden" name="{{ $key }}[]" value="{{ $v }}">
+                                    @endforeach
+                                @else
+                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                @endif
+                            @endforeach
+                            <button type="submit" class="btn btn-light-success font-weight-bolder">
+                                <i class="flaticon2-download"></i>
+                                {{ __('admin::label.export_excel') }}
+                            </button>
+                        </form>
                     </div>
                 </div>
 

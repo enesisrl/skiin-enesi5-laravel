@@ -14,7 +14,6 @@ class Acceptance extends Model  {
     protected $table = 'acceptances';
 
     protected $fillable = [
-        'website_id',
         'barcode',
         'agency',
         'article_1',
@@ -93,7 +92,28 @@ class Acceptance extends Model  {
     /* Prepare
     ------------------------------------------------------------ */
     public function getData($params=[]){
-        return self::prepare($params);
+
+        $query = self::prepare($params);
+        $query->orderBy('created_at','desc');
+        //$query->ddRawSql();
+        if (request()->has('customSearch')){
+            $orderField = null;
+            $orderType = 'asc';
+            foreach(request()->input('customSearch') as $p){
+                if (Arr::get($p,'name') == 'orderField'){
+                    $orderField = Arr::get($p,"value");
+                }
+                if (Arr::get($p,'name') == 'orderType'){
+                    $orderType = Arr::get($p,"value");
+                }
+            }
+            if ($orderField){
+                $query->reorder($orderField,$orderType);
+            }
+        }
+
+
+        return $query;
     }
 
     public static function getById($id) {

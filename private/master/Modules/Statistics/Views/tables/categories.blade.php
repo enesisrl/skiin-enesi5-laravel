@@ -14,7 +14,7 @@
     @endphp
     @foreach($data as $record)
         @php
-            $total_acceptances += $record->n_acceptances;
+            $total_acceptances += $record->total_acceptances;
             $total_amount += $record->amount;
         @endphp
         <tr>
