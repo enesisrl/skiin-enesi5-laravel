@@ -177,6 +177,10 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'info', 'product_application_import', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjI1OToiUXVlc3RhIHByb2NlZHVyYSBwZXJtZXR0ZSBkaSBjYXJpY2FyZSB1biBmaWxlIENTViBjb250ZW5lbnRlIGxlIHNvbGkgY29sb25uZSByZWxhdGl2ZSBhIFNLVSBwcm9kb3R0bywgTWFyY2EsIE1vZGVsbG8gZSBBbm5vIHBlciBsJ2Fzc29jaWF6aW9uZSBwcm9kb3R0aSBhaSB2ZWljb2xpLg0KVHV0dGUgbGUgbWFyY2hlLCBtb2RlbGxpIGUgdmVpY29saSB2ZXJyYW5ubyBlbGltaW5hdGkgZSByaWNyZWF0aSBzdWxsYSBiYXNlIGRlbCBmaWxlIGNhcmljYXRvLiI7czoyOiJlbiI7czoyNTM6IlRoaXMgcHJvY2VkdXJlIGFsbG93cyB5b3UgdG8gdXBsb2FkIGEgQ1NWIGZpbGUgY29udGFpbmluZyBvbmx5IHRoZSBjb2x1bW5zIHJlbGF0ZWQgdG8gUHJvZHVjdCBTS1UsIE1ha2UsIE1vZGVsIGFuZCBZZWFyIGZvciB0aGUgYXNzb2NpYXRpb24gb2YgcHJvZHVjdHMgdG8gdmVoaWNsZXMuIEFsbCBtYWtlcywgbW9kZWxzIGFuZCB2ZWhpY2xlcyB3aWxsIGJlIGRlbGV0ZWQgYW5kIHJlY3JlYXRlZCBiYXNlZCBvbiB0aGUgdXBsb2FkZWQgZmlsZS4iO3M6MjoiZnIiO047czoyOiJlcyI7Tjt9')));
         $this->insertLang('admin', 'info', 'product_application_import_processing', unserialize(base64_decode('YTo0OntzOjI6ImVzIjtOO3M6MjoiaXQiO3M6NTM6IkwnaW1wb3J0YXppb25lIGRlbCBmaWxlIGFwcGxpY2F6aW9uaSDDqCBpbiBlc2VjdXppb25lIjtzOjI6ImZyIjtOO3M6MjoiZW4iO3M6MzQ6IkFwcGxpY2F0aW9uIGZpbGUgaW1wb3J0IGlzIHJ1bm5pbmciO30=')));
         $this->insertLang('admin', 'info', 'product_application_import_queued', unserialize(base64_decode('YTo0OntzOjI6ImVuIjtzOjQ3OiJBcHBsaWNhdGlvbiBmaWxlIGltcG9ydCBpcyBxdWV1ZWQgZm9yIGV4ZWN1dGlvbiI7czoyOiJlcyI7TjtzOjI6Iml0IjtzOjY0OiJMJ2ltcG9ydGF6aW9uZSBkZWwgZmlsZSBhcHBsaWNhemlvbmkgw6ggaW4gY29kYSBwZXIgbCdlc2VjdXppb25lIjtzOjI6ImZyIjtOO30=')));
+        $this->insertLang('admin', 'IsoReceiptsModule', 'list_title', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjE1OiJFbGVuY28gcmljZXZ1dGUiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
+        $this->insertLang('admin', 'IsoReceiptsModule', 'title', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjIyOiJSaWNldnV0ZSBJU08gLSBQcml2YXRpIjtzOjI6ImVuIjtOO3M6MjoiZnIiO047czoyOiJlcyI7Tjt9')));
+        $this->insertLang('admin', 'IsoRentReceiptsModule', 'list_title', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjE1OiJFbGVuY28gcmljZXZ1dGUiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
+        $this->insertLang('admin', 'IsoRentReceiptsModule', 'title', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjIzOiJSaWNldnV0ZSBJU08gLSBOb2xlZ2dpbyI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
         $this->insertLang('admin', 'js', 'datatable.aria.sortAscending', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjM2OiI6IHNvcnQgdGhlIGNvbHVtbiBpbiBhc2NlbmRpbmcgb3JkZXIiO3M6MjoiaXQiO3M6Mzk6Ijogb3JkaW5hIGxhIGNvbG9ubmEgaW4gb3JkaW5lIGNyZXNjZW50ZSI7fQ==')));
         $this->insertLang('admin', 'js', 'datatable.aria.sortDescending', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjQxOiI6IG9yZGluYSBsYSBjb2xvbm5hIGluIG9yZGluZSBkZWNyZXNjZW50ZSI7czoyOiJlbiI7czozNzoiOiBzb3J0IHRoZSBjb2x1bW4gaW4gZGVzY2VuZGluZyBvcmRlciI7fQ==')));
         $this->insertLang('admin', 'js', 'datatable.emptyTable', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjE1OiJObyBkYXRhIHByZXNlbnQiO3M6MjoiaXQiO3M6MjA6Ik5lc3N1biBkYXRvIHByZXNlbnRlIjt9')));
@@ -246,6 +250,7 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'label', 'create', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjY6IkNyZWF0ZSI7czoyOiJpdCI7czo4OiJBZ2dpdW5naSI7fQ==')));
         $this->insertLang('admin', 'label', 'created_at', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjEwOiJDcmVhdGVkIGF0IjtzOjI6Iml0IjtzOjk6IkNyZWF0byBpbCI7fQ==')));
         $this->insertLang('admin', 'label', 'data_processing', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjI1OiJUcmF0dGFtZW50byBhdXRvbWF0aXp6YXRvIjt9')));
+        $this->insertLang('admin', 'label', 'date', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjQ6IkRhdGEiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'date_end', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjk6IkRhdGEgZmluZSI7czoyOiJlbiI7czo4OiJFbmQgZGF0ZSI7fQ==')));
         $this->insertLang('admin', 'label', 'date_from', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjg6IkRhdGEgZGFsIjt9')));
         $this->insertLang('admin', 'label', 'date_in', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjExOiJEYXRhIGFycml2byI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
@@ -299,6 +304,7 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'label', 'google_analytics_id', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjE5OiJHb29nbGUgQW5hbHl0aWNzIElkIjtzOjI6Iml0IjtzOjE5OiJHb29nbGUgQW5hbHl0aWNzIElkIjt9')));
         $this->insertLang('admin', 'label', 'google_api_key', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjE0OiJHb29nbGUgQVBJIEtleSI7czoyOiJlbiI7czoxNDoiR29vZ2xlIEFQSSBLZXkiO30=')));
         $this->insertLang('admin', 'label', 'has_parking', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjEwOiJQYXJjaGVnZ2lvIjt9')));
+        $this->insertLang('admin', 'label', 'height', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjc6IkFsdGV6emEiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'homepage', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjE2OiJWaXNpYmlsZSBpbiBob21lIjt9')));
         $this->insertLang('admin', 'label', 'hours', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjU6Ik9yYXJpIjt9')));
         $this->insertLang('admin', 'label', 'image', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjg6IkltbWFnaW5lIjtzOjI6ImVuIjtzOjU6IkltYWdlIjt9')));
@@ -422,6 +428,7 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'label', 'services', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjc6IlNlcnZpemkiO30=')));
         $this->insertLang('admin', 'label', 'servizi_struttura', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjE3OiJTZXJ2aXppIHN0cnV0dHVyYSI7fQ==')));
         $this->insertLang('admin', 'label', 'share_capital', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjEzOiJTaGFyZSBjYXBpdGFsIjtzOjI6Iml0IjtzOjE2OiJDYXBpdGFsZSBTb2NpYWxlIjt9')));
+        $this->insertLang('admin', 'label', 'shoe_measure', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjE1OiJNaXN1cmEgc2NhcnBvbmUiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'shop_hours', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjEyOiJPcmFyaSBuZWdvemkiO30=')));
         $this->insertLang('admin', 'label', 'show_login_token', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjMwOiJNb3N0cmEgVE9LRU4gZGkgYXV0ZW50aWNhemlvbmUiO3M6MjoiZW4iO3M6MjY6IlNob3cgYXV0aGVudGljYXRpb24gdG9rZW5zIjt9')));
         $this->insertLang('admin', 'label', 'sigla', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjEyOiJBYmJyZXZpYXRpb24iO3M6MjoiaXQiO3M6NToiU2lnbGEiO30=')));
@@ -429,6 +436,7 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'label', 'site_1', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjIxOiJQb3N0byBTY2kgLyBTbm93Ym9hcmQiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'site_2', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjE0OiJQb3N0byBTY2FycG9uaSI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
         $this->insertLang('admin', 'label', 'ski_code_and_site', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjIwOiJTY2kgKGNvZGljZSAvIHBvc3RvKSI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
+        $this->insertLang('admin', 'label', 'skier_type', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjE3OiJBYmlsaXTDoCBzY2lhdG9yZSI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
         $this->insertLang('admin', 'label', 'sku', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjM6IlNLVSI7czoyOiJpdCI7czozOiJTS1UiO30=')));
         $this->insertLang('admin', 'label', 'slide', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjU6IlNsaWRlIjtzOjI6Iml0IjtzOjU6IlNsaWRlIjt9')));
         $this->insertLang('admin', 'label', 'slug', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjQ6IlNsdWciO3M6MjoiaXQiO3M6NDoiU2x1ZyI7fQ==')));
@@ -464,6 +472,7 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'label', 'typology_2', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjI3OiJUaXBvbG9naWEgbm9sZWdnaW8gU2NhcnBvbmkiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'typology_3', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjI0OiJUaXBvbG9naWEgbm9sZWdnaW8gQWx0cm8iO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'typology_3', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjI0OiJUaXBvbG9naWEgbm9sZWdnaW8gQWx0cm8iO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
+        $this->insertLang('admin', 'label', 'uo_age', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjE4OiJVbmRlciAxMCAvIE92ZXIgNTAiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'update_coords', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjE5OiJBZ2dpb3JuYSBjb29yZGluYXRlIjtzOjI6ImVuIjtzOjE4OiJVcGRhdGUgY29vcmRpbmF0ZXMiO30=')));
         $this->insertLang('admin', 'label', 'url', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjM6IlVybCI7czoyOiJlbiI7czozOiJVcmwiO30=')));
         $this->insertLang('admin', 'label', 'user_auth_method', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjE3OiJNZXRvZG8gZGkgYWNjZXNzbyI7fQ==')));
@@ -479,15 +488,19 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'label', 'video_surveillance', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjE4OiJWaWRlbyBzb3J2ZWdsaWFuemEiO30=')));
         $this->insertLang('admin', 'label', 'view', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjQ6IlZpZXciO3M6MjoiaXQiO3M6MTA6IlZpc3VhbGl6emEiO30=')));
         $this->insertLang('admin', 'label', 'website', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjc6IldlYnNpdGUiO3M6MjoiZW4iO3M6NzoiV2Vic2l0ZSI7fQ==')));
+        $this->insertLang('admin', 'label', 'weight', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjQ6IlBlc28iO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'label', 'whatsapp', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjg6IldoYXRzQXBwIjtzOjI6ImVuIjtzOjg6IldoYXRzQXBwIjt9')));
         $this->insertLang('admin', 'label', 'year', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjQ6IlllYXIiO3M6MjoiaXQiO3M6NDoiQW5ubyI7fQ==')));
         $this->insertLang('admin', 'label', 'yes', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjM6IlPDrCI7czoyOiJlbiI7czozOiJZZXMiO30=')));
         $this->insertLang('admin', 'label', 'your_auth_token_is', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjIwOiJBdXRoZW50aWNhdGlvbiBUT0tFTiI7czoyOiJpdCI7czoyMzoiVE9LRU4gZGkgYXV0ZW50aWNhemlvbmUiO30=')));
+        $this->insertLang('admin', 'label', 'z_value', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjg6IlZhbG9yZSBaIjtzOjI6ImVuIjtOO3M6MjoiZnIiO047czoyOiJlcyI7Tjt9')));
         $this->insertLang('admin', 'LanguagesModule', 'list_title', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjEzOiJFbGVuY28gbGluZ3VlIjtzOjI6ImVuIjtzOjk6Ikxhbmd1YWdlcyI7fQ==')));
         $this->insertLang('admin', 'LanguagesModule', 'title', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjE5OiJMYW5ndWFnZSBtYW5hZ2VtZW50IjtzOjI6Iml0IjtzOjE1OiJHZXN0aW9uZSBsaW5ndWUiO30=')));
         $this->insertLang('admin', 'LocationTypesModule', 'list_title', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjIxOiJFbGVuY28gdGlwbyBwb3NpemlvbmkiO30=')));
         $this->insertLang('admin', 'LocationTypesModule', 'title', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjE3OiJUaXBvIGRpIHBvc2l6aW9uZSI7fQ==')));
         $this->insertLang('admin', 'mail', 'your_otp_code_is', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjQxOToiPGgyPkNvZGljZSBkaSBWZXJpZmljYTwvaDI+CiA8cD5FY2NvIGlsIHR1byBjb2RpY2UgZGkgdmVyaWZpY2EgcGVyIGNvbXBsZXRhcmUgbCdhY2Nlc3NvOjwvcD4KIDxwIHN0eWxlPSJmb250LXNpemU6IDIwcHg7IHRleHQtYWxpZ246Y2VudGVyIj48c3Ryb25nPjpvdHA8L3N0cm9uZz48L3A+ICAgICAgCiA8cCBjbGFzcz0id2FybmluZyI+CiAgICAgICA8c3Ryb25nPkltcG9ydGFudGU6PC9zdHJvbmc+IFF1ZXN0byBjb2RpY2Ugw6ggdmFsaWRvIHBlciA6dmFsaWRpdHkgbWludXRpLiAKICAgICAgIE5vbiBjb25kaXZpZGVyZSBxdWVzdG8gY29kaWNlIGNvbiBuZXNzdW5vLgogPC9wPgogICAgICAgIAo8cD5TZSBub24gaGFpIHJpY2hpZXN0byBxdWVzdG8gY29kaWNlLCBpZ25vcmEgcXVlc3RhIGVtYWlsLjwvcD4KPHA+R3JhemllITwvcD4iO30=')));
+        $this->insertLang('admin', 'materials', 'boots', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjg6IlNjYXJwb25pIjtzOjI6ImVuIjtOO3M6MjoiZnIiO047czoyOiJlcyI7Tjt9')));
+        $this->insertLang('admin', 'materials', 'ski', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjM6IlNjaSI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
         $this->insertLang('admin', 'MediaLibraryModule', 'actions', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjc6IkFjdGlvbnMiO3M6MjoiaXQiO3M6NjoiQXppb25pIjt9')));
         $this->insertLang('admin', 'MediaLibraryModule', 'add_directory', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjEzOiJBZGQgZGlyZWN0b3J5IjtzOjI6Iml0IjtzOjE0OiJOdW92YSBjYXJ0ZWxsYSI7fQ==')));
         $this->insertLang('admin', 'MediaLibraryModule', 'add_first_directory', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjI0OiJDcmVhdGUgeW91ciBmaXJzdCBmb2xkZXIiO3M6MjoiaXQiO3M6MjY6IkNyZWEgbGEgdHVhIHByaW1hIGNhcnRlbGxhIjt9')));
@@ -516,14 +529,17 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'menu', 'classifieds', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjc6IkFubnVuY2kiO3M6MjoiZW4iO3M6MTM6IkFubm91bmNlbWVudHMiO30=')));
         $this->insertLang('admin', 'menu', 'orders', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjY6Ik9yZGVycyI7czoyOiJpdCI7czo2OiJPcmRpbmkiO30=')));
         $this->insertLang('admin', 'menu', 'products', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjg6IlByb2R1Y3RzIjtzOjI6Iml0IjtzOjg6IlByb2RvdHRpIjt9')));
+        $this->insertLang('admin', 'menu', 'section_archive', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjg6IkFyY2hpdmlvIjtzOjI6ImVuIjtOO3M6MjoiZnIiO047czoyOiJlcyI7Tjt9')));
         $this->insertLang('admin', 'menu', 'section_contents', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjk6IkNvbnRlbnV0aSI7fQ==')));
         $this->insertLang('admin', 'menu', 'section_contenuti', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjk6IkNvbnRlbnV0aSI7czoyOiJlbiI7czo4OiJDb250ZW50cyI7fQ==')));
         $this->insertLang('admin', 'menu', 'section_faq', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjM6IkZBUSI7czoyOiJpdCI7czo2OiJGLkEuUS4iO30=')));
         $this->insertLang('admin', 'menu', 'section_impostazioni', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjEyOiJJbXBvc3RhemlvbmkiO3M6MjoiZW4iO3M6ODoiU2V0dGluZ3MiO30=')));
+        $this->insertLang('admin', 'menu', 'section_iso_receipts', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjEyOiJSaWNldnV0ZSBJU08iO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'menu', 'section_localizations', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjg6IkxvY2F0aW9uIjtzOjI6Iml0IjtzOjE0OiJMb2NhbGl6emF6aW9uZSI7fQ==')));
         $this->insertLang('admin', 'menu', 'section_notifications', unserialize(base64_decode('YTo0OntzOjI6ImVuIjtzOjEzOiJOb3RpZmljYXRpb25zIjtzOjI6Iml0IjtzOjk6Ik5vdGlmaWNoZSI7czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'menu', 'section_push_notifications', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjE0OiJOb3RpZmljaGUgcHVzaCI7fQ==')));
         $this->insertLang('admin', 'menu', 'section_settings', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjg6IlNldHRpbmdzIjtzOjI6Iml0IjtzOjEyOiJJbXBvc3RhemlvbmkiO30=')));
+        $this->insertLang('admin', 'menu', 'section_statistics', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjExOiJTdGF0aXN0aWNoZSI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
         $this->insertLang('admin', 'menu', 'section_tabelle_generali', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjE2OiJUYWJlbGxlIEdlbmVyYWxpIjtzOjI6ImVuIjtzOjE0OiJHZW5lcmFsIHRhYmxlcyI7fQ==')));
         $this->insertLang('admin', 'menu', 'section_users', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjY6IlV0ZW50aSI7fQ==')));
         $this->insertLang('admin', 'menu', 'section_utenti', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjE1OiJVdGVudGkgZSBHcnVwcGkiO3M6MjoiZW4iO3M6MTY6IlVzZXJzIGFuZCBHcm91cHMiO30=')));
@@ -578,6 +594,9 @@ class ResourcesAdminLangTableSeeder extends Seeder {
         $this->insertLang('admin', 'option', 'right-pic-left-text', unserialize(base64_decode('YToyOntzOjI6ImVuIjtzOjM3OiJJbWFnZSBvbiB0aGUgcmlnaHQgLSBUZXh0IG9uIHRoZSBsZWZ0IjtzOjI6Iml0IjtzOjM2OiJJbW1hZ2luZSBhIGRlc3RyYSAtIFRlc3RvIGEgc2luaXN0cmEiO30=')));
         $this->insertLang('admin', 'option', 'site_1', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjk6IlBvc3RvIHNjaSI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
         $this->insertLang('admin', 'option', 'site_2', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjE0OiJQb3N0byBzY2FycG9uaSI7czoyOiJlbiI7TjtzOjI6ImZyIjtOO3M6MjoiZXMiO047fQ==')));
+        $this->insertLang('admin', 'option', 'skier_type_average', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjU6Ik1lZGlvIjtzOjI6ImVuIjtOO3M6MjoiZnIiO047czoyOiJlcyI7Tjt9')));
+        $this->insertLang('admin', 'option', 'skier_type_beginner', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjEyOiJQcmluY2lwaWFudGUiO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
+        $this->insertLang('admin', 'option', 'skier_type_expert', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjc6IkVzcGVydG8iO3M6MjoiZW4iO047czoyOiJmciI7TjtzOjI6ImVzIjtOO30=')));
         $this->insertLang('admin', 'option', 'slow', unserialize(base64_decode('YToxOntzOjI6Iml0IjtzOjU6IkxlbnRhIjt9')));
         $this->insertLang('admin', 'option', 'top-pic-bottom-text', unserialize(base64_decode('YToyOntzOjI6Iml0IjtzOjMzOiJJbW1hZ2luZSBpbiBhbHRvIC0gVGVzdG8gaW4gYmFzc28iO3M6MjoiZW4iO3M6Mjk6IkltYWdlIG9uIHRvcCAtIFRleHQgb24gYm90dG9tIjt9')));
         $this->insertLang('admin', 'option', 'typology_only_deposit', unserialize(base64_decode('YTo0OntzOjI6Iml0IjtzOjEzOiJTb2xvIGRlcG9zaXRvIjtzOjI6ImVuIjtOO3M6MjoiZnIiO047czoyOiJlcyI7Tjt9')));

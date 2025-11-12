@@ -19,7 +19,6 @@ class IsoReceipt extends Model  implements HasMedia {
     protected $table = 'iso_receipts';
 
     protected $fillable = [
-        'website_id',
         'first_name',
         'last_name',
         'ski',

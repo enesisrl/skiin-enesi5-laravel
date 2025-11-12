@@ -141,25 +141,6 @@ return [
                     }
                     return $ret;
                 }];
-            $list[] =  [
-                        'name' => 'signature_zpl',
-                        'label' => __('admin::label.signature'),
-                        'width' => '10%',
-                        'type' => 'custom',
-                        'formatFunction' => function($qb) use ($module){
-                            $ret = "";
-                            $signature_zpl = public_path('storage/signatures/iso/').$qb->id.".zpl";
-                            if (file_exists($signature_zpl)){
-                                if ($ret) $ret .= '&nbsp;';
-                                $ret .= '<a class="ml-3" href="#" onclick="adminAjaxCall(this); return false;" data-ajax-call=\'{"action":"'.\Illuminate\Support\Facades\App::make('IsoReceiptsModule')->adminRoute('printIso', ['id'=>$qb->id,'from_receipt'=>1]).'"}\'><i class="fas fa-print"></i></a>';
-                            }
-                            return $ret;
-                        },
-                        'searchable' => false,
-                        'order' => 0,
-                        'orderDefault' => 0,
-                        'orderDefaultType' => ''
-                    ];
             if ($module->can('destroy')){
                 $list[] = [
                     'name' => 'actions',
