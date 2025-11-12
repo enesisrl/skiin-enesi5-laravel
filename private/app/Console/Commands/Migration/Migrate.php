@@ -88,7 +88,8 @@ class Migrate extends Command
                 'altezza.descrizione as altezza_descrizione',
                 'peso.descrizione as peso_descrizione',
                 'misura_scarpa.descrizione as misura_scarpa_descrizione',
-                'agenzia.nome as agenzia_nome'
+                'agenzia.nome as agenzia_nome',
+                DB::raw('DATEDIFF(accettazione.data_out, accettazione.data_in) AS giorni_deposito')
             ])
             ->leftJoin('articolo as articolo_1', 'accettazione.id_articolo_1', '=', 'articolo_1.codice_art')
             ->leftJoin('articolo as articolo_2', 'accettazione.id_articolo_2', '=', 'articolo_2.codice_art')
@@ -182,6 +183,9 @@ class Migrate extends Command
                         'insurance' => ($old->assicurazione == 'S') ? true : false,
                         'insurance_price' => $old->assicurazione_valore,
                         'refundable' => $old->rimborsabile == 'S' ? true : false,
+                        'deposit_amount_1' => $this->getDepositAmount($old,1),
+                        'deposit_amount_2' => $this->getDepositAmount($old,2),
+                        'deposit_amount_3' => $this->getDepositAmount($old,3),
                     ];
 
                     $acceptance = new Acceptance($data);
@@ -428,4 +432,55 @@ class Migrate extends Command
         );
         $this->info("Totale ricevute ISO noleggio importate: $isoRentCount");
     }
+
+    public function getDepositAmount($oldAcceptance, $index)
+    {
+        if ($oldAcceptance->{'id_tipologia_'.$index} != '2' || $oldAcceptance->giorni_deposito <= 0){
+            return 0;
+        }
+
+        $query = DB::connection('mysql_old')->table('listino_elenco')
+            ->join('stagione', 'listino_elenco.id_stagione', '=', 'stagione.id_stagione')
+            ->where('stagione.dal', '<=', $oldAcceptance->data_in)
+            ->where('stagione.al', '>=', $oldAcceptance->data_in);
+        $listino = clone $query;
+        $listino->where('listino_elenco.nome_listino', 'Standard');
+        $listinoResult = $listino->first();
+        if (!$listinoResult) {
+            $listino = clone $query;
+            $listinoResult = $listino->first();
+        }
+        if ($listinoResult) {
+            if ($listinoResult->id_listino_elenco){
+                $oltre15giorni = 0;
+                $campo = null;
+                if ($oldAcceptance->giorni_deposito <= 15){
+                    $campo="g".$oldAcceptance->giorni_deposito;
+                }else{
+                    if ($oldAcceptance->stagionale == 1){
+                        $campo = "stagionale";
+                    }else{
+                        $campo = "g15, oltre_15";
+                        $oltre15giorni = 1;
+                    }
+                }
+                $resa = DB::connection('mysql_old')->table('listino')
+                    ->where('id_listino_elenco', $listinoResult->id_listino_elenco)
+                    ->where('id_categoria', $oldAcceptance->{'id_categoria_'.$index})
+                    ->where('id_tipologia', $oldAcceptance->{'id_tipologia_'.$index})
+                ->select(DB::raw($campo . ' AS resa'))->first();
+                if ($resa) {
+                    if ($oltre15giorni) {
+                        return $resa->g15 + ($resa->resa * ($oldAcceptance->giorni_deposito - 15));
+                    } else {
+                        return $resa->resa;
+                    }
+                } else {
+                    return 0;
+                }
+            }
+        }
+        return 0;
+    }
+
 }

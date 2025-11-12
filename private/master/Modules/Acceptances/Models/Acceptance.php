@@ -68,6 +68,9 @@ class Acceptance extends Model  {
         'insurance_price',
         'price_details',
         'refundable',
+        'deposit_amount_1',
+        'deposit_amount_2',
+        'deposit_amount_3'
     ];
 
     protected $hidden = [];

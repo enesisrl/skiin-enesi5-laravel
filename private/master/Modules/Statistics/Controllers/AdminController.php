@@ -60,4 +60,19 @@ class AdminController extends BaseController {
             'searchForm' => $searchForm
         ]);
     }
+
+    public function deposits(Request $request)
+    {
+        $searchForm = $this->module->getSearchFormCustom('deposits');
+
+        $data = Statistics::getDepositsStatistics($request->all());
+        return $this->module->adminView("index")->with([
+            'page_title' => $this->module->adminLang("deposits"),
+            'title' => $this->module->adminLang("deposits_title"),
+            'search_section_title' => $this->module->adminLang("deposits_search_title"),
+            'data' => $data,
+            'tableView' => 'deposits',
+            'searchForm' => $searchForm
+        ]);
+    }
 }

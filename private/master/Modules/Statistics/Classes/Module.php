@@ -668,4 +668,91 @@ orderType
         return $q->get();
     }
 
+    public function getDepositsStatistics($params = []){
+
+        $keys = [
+            'search_date_from', 'search_date_to'
+        ];
+        $hasAny = false;
+        foreach ($keys as $k) {
+            if (array_key_exists($k, $params)) {
+                $val = $params[$k];
+                if (is_array($val)) {
+                    if (!empty($val)) { $hasAny = true; break; }
+                } else {
+                    if ($val !== null && $val !== '') { $hasAny = true; break; }
+                }
+            }
+        }
+        if (!$hasAny) {
+            return null;
+        }
+
+        $model = new Acceptance();
+        $table = $model->getTable();
+
+        // helper per applicare filtri su una query builder
+        $applyDateFilters = function($qb) use ($params, $table) {
+            // leggi i parametri anche se vuoti per semplificare la logica
+            $from = !empty($params['search_date_from']) ? $params['search_date_from'] : null;
+            $to = !empty($params['search_date_to']) ? $params['search_date_to'] : null;
+
+            if ($from && $to) {
+                // accettazioni che iniziano nel range
+                $qb->whereBetween("{$table}.date_in", [$from, $to]);
+            } elseif ($from) {
+                // accettazioni che iniziano dopo o uguali a from
+                $qb->where("{$table}.date_in", ">=", $from);
+            } elseif ($to) {
+                // se è specificato solo il to, filtriamo per accettazioni che terminano entro to
+                $qb->where("{$table}.date_out", "<=", $to);
+            }
+        };
+
+        // costante typology only_deposit
+        $onlyDeposit = config('constants.typologies.only_deposit');
+
+        // sottoselezione per slot 1: includi categoria_1
+        $q1 = DB::table($table)
+            ->selectRaw("{$table}.total_days AS duration, {$table}.category_1_description AS category, SUM({$table}.deposit_amount_1) AS amount, COUNT({$table}.id) AS n_acceptances")
+            ->where("{$table}.typology_1", $onlyDeposit)
+            ->whereNotNull("{$table}.deposit_amount_1")
+            ->whereRaw("COALESCE({$table}.category_1, '') <> ''")
+            ->groupBy("{$table}.total_days", "{$table}.category_1");
+        $applyDateFilters($q1);
+
+        // slot 2: includi categoria_2
+        $q2 = DB::table($table)
+            ->selectRaw("{$table}.total_days AS duration, {$table}.category_2_description AS category, SUM({$table}.deposit_amount_2) AS amount, COUNT({$table}.id) AS n_acceptances")
+            ->where("{$table}.typology_2", $onlyDeposit)
+            ->whereNotNull("{$table}.deposit_amount_2")
+            ->whereRaw("COALESCE({$table}.category_2, '') <> ''")
+            ->groupBy("{$table}.total_days", "{$table}.category_2");
+        $applyDateFilters($q2);
+
+        // slot 3: includi categoria_3
+        $q3 = DB::table($table)
+            ->selectRaw("{$table}.total_days AS duration, {$table}.category_3_description AS category, SUM({$table}.deposit_amount_3) AS amount, COUNT({$table}.id) AS n_acceptances")
+            ->where("{$table}.typology_3", $onlyDeposit)
+            ->whereNotNull("{$table}.deposit_amount_3")
+            ->whereRaw("COALESCE({$table}.category_3, '') <> ''")
+            ->groupBy("{$table}.total_days", "{$table}.category_3");
+        $applyDateFilters($q3);
+
+        // unisci le tre query con UNION ALL
+        $union = $q1->unionAll($q2)->unionAll($q3);
+
+        // usa la union come subquery e raggruppa per durata e categoria sommando gli importi e le accettazioni
+        $final = DB::query()->fromSub($union, 'u')
+            ->selectRaw('u.duration AS duration, u.category AS category, SUM(u.amount) AS amount, SUM(u.n_acceptances) AS total_acceptances')
+            ->groupBy('u.category', 'u.duration')
+            ->orderBy('u.category','asc')
+            ->orderBy('u.duration', 'desc')
+            ->orderBy('total_acceptances','desc')
+            ->orderBy('amount', 'desc')
+            ->get();
+
+        return $final;
+    }
+
 }
