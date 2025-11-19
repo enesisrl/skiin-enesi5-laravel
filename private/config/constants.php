@@ -93,4 +93,7 @@ return [
             'recipient' => env('BOOKING_DEBUG_CCN_RECIPIENT',null),
         ],
     ],
+    'two-factor' => [
+        'required' => env('TWO_FACTOR_REQUIRED', false)
+    ]
 ];

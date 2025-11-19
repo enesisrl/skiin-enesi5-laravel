@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\EnsureTwoFactorEnabled;
 use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\Guest;
 use App\Http\Middleware\NoCacheMiddleware;
@@ -70,7 +71,8 @@ class Kernel extends HttpKernel
             SubstituteBindings::class,
             RestrictIpMiddleware::class,
             SetLocale::class,
-            SetWebsite::class
+            SetWebsite::class,
+            EnsureTwoFactorEnabled::class,
         ],
 
         'api' => [
