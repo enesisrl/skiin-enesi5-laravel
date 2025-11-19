@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AppUser;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\Cors;
 use App\Http\Middleware\EncryptCookies;
@@ -48,13 +47,12 @@ class Kernel extends HttpKernel
     protected $middleware = [
         TrustHosts::class,
         TrustProxies::class,
-        //HandleCors::class,
-        Cors::class,
+        HandleCors::class,
+        //Cors::class,
         PreventRequestsDuringMaintenance::class,
         ValidatePostSize::class,
         TrimStrings::class,
-        ConvertEmptyStringsToNull::class,
-        AppUser::class
+        ConvertEmptyStringsToNull::class
     ];
 
     /**
@@ -103,7 +101,6 @@ class Kernel extends HttpKernel
         'cors' => Cors::class,
         'setApiLocale' => SetApiLocale::class,
         'json.response' => ForceJsonResponse::class,
-        'appUser.update' => AppUser::class,
         'nocache' => NoCacheMiddleware::class,
     ];
 }

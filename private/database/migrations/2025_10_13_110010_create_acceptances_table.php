@@ -33,7 +33,7 @@ return new class extends Migration
             $table->integer('site_1')->nullable()->index();
             $table->integer('site_2')->nullable()->index();
             $table->integer('site_3')->nullable()->index();
-            $table->string('customer')->nullable()->index();
+            $table->string('customer')->nullable();
             $table->string('name')->nullable()->index();
             $table->string('identity')->nullable()->index();
             $table->boolean('seasonal')->nullable()->index();

@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Bus;
 use Master\Foundation\Modules\Commands\Command;
-use Master\Modules\AppUsers\Models\AppUser;
 use Master\Modules\Websites\Facades\Websites;
 
 class BackupDB extends Command

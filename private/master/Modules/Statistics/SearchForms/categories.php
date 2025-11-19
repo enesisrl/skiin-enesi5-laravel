@@ -29,7 +29,7 @@ return [
             'sessionValue' => $sessionValues["search_days"] ?? null,
         ]);
 
-        $searchForm->addField('DateRange', [
+        $searchForm->addField('Daterange', [
             'name' => 'search.date',
             'sessionValue' => (isset($sessionValues["search_date"])) ? $sessionValues["search_date"] : null,
             'sessionValueFrom' => (isset($sessionValues["search_date_from"])) ? $sessionValues["search_date_from"] : null,

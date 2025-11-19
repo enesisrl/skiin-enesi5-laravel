@@ -4,6 +4,7 @@ namespace App\Console\Commands\Migration;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 use Master\Modules\Acceptances\Models\Acceptance;
 use Master\Modules\Acceptances\Models\AcceptanceMaterial;
 use Master\Modules\Acceptances\Models\AcceptanceProfit;
@@ -20,7 +21,17 @@ class Migrate extends Command
 
     protected $signatures_url;
 
-    protected $download_files = false;
+    protected $download_files = true;
+
+    // Cache in-memory per id già inseriti (evita di eseguire lookup ripetuti)
+    protected $inserted = [
+        'acceptances' => [],
+        'materials' => [],
+        'profits' => [],
+        'receipts' => [],
+        'iso_receipts' => [],
+        'iso_rent_receipts' => [],
+    ];
 
     public function handle()
     {
@@ -188,12 +199,12 @@ class Migrate extends Command
                         'deposit_amount_3' => $this->getDepositAmount($old,3),
                     ];
 
-                    $acceptance = new Acceptance($data);
-                    $acceptance->id = $old->id_accettazione;
-                    $acceptance->save();
-                    $accCount++;
-                    if ($accCount % 1000 === 0) {
-                        $this->info("Importati $accCount accettazioni...");
+                    $id = $old->id_accettazione;
+                    if ($this->insertIfNotExists(Acceptance::class, $id, $data, 'acceptances')) {
+                        $accCount++;
+                        if ($accCount % 1000 === 0) {
+                            $this->info("Importati $accCount accettazioni...");
+                        }
                     }
                 }
             });
@@ -230,9 +241,8 @@ class Migrate extends Command
                             'category' => $old->categoria_codice,
                             'category_description' => $old->categoria_nome
                         ];
-                        $acceptanceMaterial = new AcceptanceMaterial($data);
-                        $acceptanceMaterial->id = $old->id_accettazione_materiale;
-                        $acceptanceMaterial->save();
+                        $id = $old->id_accettazione_materiale;
+                        $this->insertIfNotExists(AcceptanceMaterial::class, $id, $data, 'materials');
                     }
                     $matCount++;
                     if ($matCount % 1000 === 0) {
@@ -271,13 +281,12 @@ class Migrate extends Command
                         'created_at' => $old->data_inserimento,
                     ];
 
-                    $acceptanceProfit = new AcceptanceProfit($data);
-                    $acceptanceProfit->id = $old->id;
-                    $acceptanceProfit->save();
-
-                    $profitCount++;
-                    if ($profitCount % 1000 === 0) {
-                        $this->info("Importati $profitCount profitti...");
+                    $id = $old->id;
+                    if ($this->insertIfNotExists(AcceptanceProfit::class, $id, $data, 'profits')) {
+                        $profitCount++;
+                        if ($profitCount % 1000 === 0) {
+                            $this->info("Importati $profitCount profitti...");
+                        }
                     }
                 }
             });
@@ -288,7 +297,7 @@ class Migrate extends Command
         $receiptCount = 0;
         DB::connection('mysql_old')->table('ricevuta')
             ->select(['ricevuta.*',
-                      'cliente.nome as agenzia_nome'
+                    'cliente.nome as agenzia_nome'
                 ])->leftJoin('cliente', 'ricevuta.id_cliente', '=', 'cliente.id_cliente')
             ->join('accettazione', 'ricevuta.id_accettazione', '=', 'accettazione.id_accettazione')
             ->where('accettazione.data_in', '>=', $tenYearsAgo)
@@ -305,13 +314,12 @@ class Migrate extends Command
                         'price' => $old->prezzo
                     ];
 
-                    $receipt = new Receipt($data);
-                    $receipt->id = $old->id_ricevuta;
-                    $receipt->save();
-
-                    $receiptCount++;
-                    if ($receiptCount % 1000 === 0) {
-                        $this->info("Importate $receiptCount ricevute...");
+                    $id = $old->id_ricevuta;
+                    if ($this->insertIfNotExists(Receipt::class, $id, $data, 'receipts')) {
+                        $receiptCount++;
+                        if ($receiptCount % 1000 === 0) {
+                            $this->info("Importate $receiptCount ricevute...");
+                        }
                     }
                 }
             });
@@ -322,9 +330,9 @@ class Migrate extends Command
         $isoCount = 0;
         DB::connection('mysql_old')->table('ricevuta_iso')
             ->select(['ricevuta_iso.*',
-                'altezza.descrizione as altezza_descrizione',
-                'peso.descrizione as peso_descrizione',
-                'misura_scarpa.descrizione as misura_scarpa_descrizione'
+                    'altezza.descrizione as altezza_descrizione',
+                    'peso.descrizione as peso_descrizione',
+                    'misura_scarpa.descrizione as misura_scarpa_descrizione'
                 ])->leftJoin('altezza', 'ricevuta_iso.id_altezza', '=', 'altezza.id_altezza')
             ->leftJoin('peso', 'ricevuta_iso.id_peso', '=', 'peso.id_peso')
             ->leftJoin('misura_scarpa', 'ricevuta_iso.id_misura_scarpa', '=', 'misura_scarpa.id_misura_scarpa')
@@ -345,32 +353,26 @@ class Migrate extends Command
                         'created_at' => $old->data_inserimento,
                     ];
 
-                    $isoReceipt = new IsoReceipt($data);
-                    $isoReceipt->id = $old->id_ricevuta_iso;
-                    $isoReceipt->save();
-
-
-                    if ($this->download_files) {
-                        $signature_pdf = rtrim($this->signatures_url,"/")."/".$old->id_ricevuta_iso.".pdf";
-                        $signature_zpl = rtrim($this->signatures_url,"/")."/".$old->id_ricevuta_iso.".zpl";
-                        try {
-                            $isoReceipt->addMediaFromUrl($signature_pdf)->toMediaCollection('pdf_file');
-                        } catch (FileCannotBeAdded|FileNotFoundException $e) {
-                            $this->error($e->getMessage());
-                        }
-
-
-                        try {
-                            $isoReceipt->addMediaFromUrl($signature_zpl)->toMediaCollection('zpl_file');
-                        } catch (FileCannotBeAdded|FileNotFoundException $e) {
-                            $this->error($e->getMessage());
+                    $id = $old->id_ricevuta_iso;
+                    if ($this->insertIfNotExists(IsoReceipt::class, $id, $data, 'iso_receipts')) {
+                        $isoCount++;
+                        if ($isoCount % 1000 === 0) {
+                            $this->info("Importate $isoCount ricevute ISO...");
                         }
                     }
 
-
-                    $isoCount++;
-                    if ($isoCount % 1000 === 0) {
-                        $this->info("Importate $isoCount ricevute ISO...");
+                    if ($this->download_files) {
+                        try {
+                            $isoReceipt = IsoReceipt::find($id);
+                            if ($isoReceipt) {
+                                $signature_pdf = rtrim($this->signatures_url,"/")."/".$old->id_ricevuta_iso.".pdf";
+                                $signature_zpl = rtrim($this->signatures_url,"/")."/".$old->id_ricevuta_iso.".zpl";
+                                $isoReceipt->addMediaFromUrl($signature_pdf)->toMediaCollection('pdf_file');
+                                $isoReceipt->addMediaFromUrl($signature_zpl)->toMediaCollection('zpl_file');
+                            }
+                        } catch (FileCannotBeAdded|FileNotFoundException $e) {
+                            $this->error($e->getMessage());
+                        }
                     }
                 }
             });
@@ -381,10 +383,11 @@ class Migrate extends Command
         $isoRentCount = 0;
         DB::connection('mysql_old')->table('ricevuta_iso_noleggio')
             ->select(['ricevuta_iso_noleggio.*',
-                'altezza.descrizione as altezza_descrizione',
-                'peso.descrizione as peso_descrizione',
-                'misura_scarpa.descrizione as misura_scarpa_descrizione'
-            ])->leftJoin('altezza', 'ricevuta_iso_noleggio.id_altezza', '=', 'altezza.id_altezza')
+                    'altezza.descrizione as altezza_descrizione',
+                    'peso.descrizione as peso_descrizione',
+                    'misura_scarpa.descrizione as misura_scarpa_descrizione'
+                ])
+            ->leftJoin('altezza', 'ricevuta_iso_noleggio.id_altezza', '=', 'altezza.id_altezza')
             ->leftJoin('peso', 'ricevuta_iso_noleggio.id_peso', '=', 'peso.id_peso')
             ->leftJoin('misura_scarpa', 'ricevuta_iso_noleggio.id_misura_scarpa', '=', 'misura_scarpa.id_misura_scarpa')
             ->orderBy('ricevuta_iso_noleggio.data_inserimento', 'asc')
@@ -403,34 +406,97 @@ class Migrate extends Command
                         'created_at' => $old->data_inserimento,
                     ];
 
-                    $isoRentReceipts = new IsoRentReceipt($data);
-                    $isoRentReceipts->id = $old->id_ricevuta_iso_noleggio;
-                    $isoRentReceipts->save();
-
-                    if ($this->download_files) {
-                        $signature_pdf = rtrim($this->signatures_url, "/") . "/" . $old->id_ricevuta_iso_noleggio . ".pdf";
-                        $signature_zpl = rtrim($this->signatures_url, "/") . "/" . $old->id_ricevuta_iso_noleggio . ".zpl";
-                        try {
-                            $isoRentReceipts->addMediaFromUrl($signature_pdf)->toMediaCollection('pdf_file');
-                        } catch (FileCannotBeAdded|FileNotFoundException $e) {
-                            $this->error($e->getMessage());
-                        }
-                        try {
-                            $isoRentReceipts->addMediaFromUrl($signature_zpl)->toMediaCollection('zpl_file');
-                        } catch (FileCannotBeAdded|FileNotFoundException $e) {
-                            $this->error($e->getMessage());
+                    $id = $old->id_ricevuta_iso_noleggio;
+                    if ($this->insertIfNotExists(IsoRentReceipt::class, $id, $data, 'iso_rent_receipts')) {
+                        $isoRentCount++;
+                        if ($isoRentCount % 1000 === 0) {
+                            $this->info("Importate $isoRentCount ricevute ISO noleggio...");
                         }
                     }
 
-                    $isoRentCount++;
-                    if ($isoRentCount % 1000 === 0) {
-                        $this->info("Importate $isoRentCount ricevute ISO noleggio...");
+                    if ($this->download_files) {
+                        try {
+                            $isoRentReceipts = IsoRentReceipt::find($id);
+                            if ($isoRentReceipts) {
+                                $signature_pdf = rtrim($this->signatures_url, "/") . "/" . $old->id_ricevuta_iso_noleggio . ".pdf";
+                                $signature_zpl = rtrim($this->signatures_url, "/") . "/" . $old->id_ricevuta_iso_noleggio . ".zpl";
+                                $isoRentReceipts->addMediaFromUrl($signature_pdf)->toMediaCollection('pdf_file');
+                                $isoRentReceipts->addMediaFromUrl($signature_zpl)->toMediaCollection('zpl_file');
+                            }
+                        } catch (FileCannotBeAdded|FileNotFoundException $e) {
+                            $this->error($e->getMessage());
+                        }
                     }
 
                 }
             }
         );
         $this->info("Totale ricevute ISO noleggio importate: $isoRentCount");
+    }
+
+    /**
+     * Inserisce il record solo se l'id non è già stato inserito (cache o DB). Non esegue aggiornamenti.
+     * Ritorna true se è stato inserito, false altrimenti.
+     */
+    private function insertIfNotExists(string $modelClass, $id, array $data, string $cacheKey): bool
+    {
+        if (!$id) {
+            return false;
+        }
+
+        // Se già inserito nella run corrente, ignora
+        if (isset($this->inserted[$cacheKey][$id])) {
+            $this->logDuplicate($cacheKey, $id, 'skipped-cache');
+            return false;
+        }
+
+        // Controlla esistenza nel DB
+        $exists = forward_static_call([$modelClass, 'find'], $id);
+         if ($exists) {
+             // marca come inserito per evitare future query
+             $this->inserted[$cacheKey][$id] = true;
+             $this->logDuplicate($cacheKey, $id, 'exists-db');
+             return false;
+         }
+
+        // Crea il nuovo record, ignorando eventuali duplicate race condition
+        try {
+            $model = new $modelClass($data);
+            $model->id = $id;
+            $model->save();
+            $this->inserted[$cacheKey][$id] = true;
+            return true;
+        } catch (QueryException $e) {
+            // Se duplicate key, ignora e considera non creato
+            $errorCode = isset($e->errorInfo[1]) ? $e->errorInfo[1] : null;
+            if ($errorCode == 1062) {
+                $this->inserted[$cacheKey][$id] = true;
+                $this->logDuplicate($cacheKey, $id, 'duplicate-key', $e->getMessage());
+                return false;
+            }
+            throw $e;
+        }
+    }
+
+    // Nuovo helper per loggare duplicati/skip su file per analisi
+    private function logDuplicate(string $cacheKey, $id, string $reason, ?string $extra = null): void
+    {
+        try {
+            $timestamp = date('Y-m-d H:i:s');
+            $message = sprintf("%s [%s] id=%s reason=%s", $timestamp, $cacheKey, (string)$id, $reason);
+            if ($extra) {
+                $message .= ' ' . str_replace(PHP_EOL, ' ', $extra);
+            }
+            $path = storage_path('logs/migrate_duplicates.log');
+            // Assicuriamoci che la directory esista (di solito esiste)
+            if (!file_exists(dirname($path))) {
+                @mkdir(dirname($path), 0755, true);
+            }
+            file_put_contents($path, $message . PHP_EOL, FILE_APPEND | LOCK_EX);
+        } catch (\Throwable $ex) {
+            // Non dobbiamo interrompere la migrazione per problemi di logging; fallback a stdout
+            try { $this->error('Log duplicate failed: '.$ex->getMessage()); } catch (\Throwable $_) {}
+        }
     }
 
     public function getDepositAmount($oldAcceptance, $index)

@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Mail;
 use Master\Foundation\GDPR;
 use Master\Foundation\Modules\Commands\Command;
 use Master\Modules\Acceptances\Models\Acceptance;
-use Master\Modules\AppUsers\Mail\Registration;
-use Master\Modules\AppUsers\Models\AppUser;
 use Master\Modules\ResourcesLang\Models\ResourceLang;
 use Master\Modules\Statistics\Facades\Statistics;
 use Master\Modules\Websites\Facades\Websites;
