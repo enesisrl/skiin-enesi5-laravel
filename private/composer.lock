@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3902ac750160cbeb1202da3f4b8c155",
+    "content-hash": "92a96f2e3514ca0566f67e2df9640808",
     "packages": [
         {
             "name": "brick/math",
@@ -931,6 +931,48 @@
             "time": "2025-04-29T15:03:13+00:00"
         },
         {
+            "name": "enesisrl/laravel-master-notifications-telegram",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:enesisrl/enesi-laravel-master-notifications-telegram.git",
+                "reference": "3403af8f6180205b7942ac7f68c68b1712c8f12c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/enesisrl/enesi-laravel-master-notifications-telegram/zipball/3403af8f6180205b7942ac7f68c68b1712c8f12c",
+                "reference": "3403af8f6180205b7942ac7f68c68b1712c8f12c",
+                "shasum": ""
+            },
+            "require": {
+                "laravel-notification-channels/telegram": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Enesisrl\\LaravelMasterNotificationsTelegram\\Providers\\LaravelMasterNotificationsTelegram"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enesisrl\\LaravelMasterNotificationsTelegram\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Enesi srl"
+                }
+            ],
+            "description": "Telegram notification module for Enesi Master Laravel",
+            "support": {
+                "source": "https://github.com/enesisrl/enesi-laravel-master-notifications-telegram/tree/v2.0",
+                "issues": "https://github.com/enesisrl/enesi-laravel-master-notifications-telegram/issues"
+            },
+            "time": "2025-09-12T09:08:01+00:00"
+        },
+        {
             "name": "enesisrl/laravel-master-otp",
             "version": "v1.0.1",
             "source": {
@@ -1512,6 +1554,78 @@
                 }
             ],
             "time": "2025-08-22T14:27:06+00:00"
+        },
+        {
+            "name": "laravel-notification-channels/telegram",
+            "version": "6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-notification-channels/telegram.git",
+                "reference": "289eb825f6c918b21bbda19bffb900d882c9647a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-notification-channels/telegram/zipball/289eb825f6c918b21bbda19bffb900d882c9647a",
+                "reference": "289eb825f6c918b21bbda19bffb900d882c9647a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.8",
+                "illuminate/contracts": "^11.0 || ^12.0",
+                "illuminate/notifications": "^11.0 || ^12.0",
+                "illuminate/support": "^11.0 || ^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "mockery/mockery": "^1.4.4",
+                "orchestra/testbench": "^10.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "phpstan/extension-installer": "^1.2",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NotificationChannels\\Telegram\\TelegramServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Telegram\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Irfaq Syed",
+                    "email": "github@lukonet.net",
+                    "homepage": "https://lukonet.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Telegram Notifications Channel for Laravel",
+            "homepage": "https://github.com/laravel-notification-channels/telegram",
+            "keywords": [
+                "laravel",
+                "notification",
+                "telegram",
+                "telegram notification",
+                "telegram notifications channel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-notification-channels/telegram/issues",
+                "source": "https://github.com/laravel-notification-channels/telegram/tree/6.0.0"
+            },
+            "time": "2025-02-25T22:59:13+00:00"
         },
         {
             "name": "laravel/framework",
@@ -4913,6 +5027,81 @@
                 }
             ],
             "time": "2025-11-05T11:25:01+00:00"
+        },
+        {
+            "name": "spatie/laravel-failed-job-monitor",
+            "version": "4.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-failed-job-monitor.git",
+                "reference": "932bd9d01f9971a4d154bd508266efd33f637e92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-failed-job-monitor/zipball/932bd9d01f9971a4d154bd508266efd33f637e92",
+                "reference": "932bd9d01f9971a4d154bd508266efd33f637e92",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.6"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "pestphp/pest": "^1.22|^2.34|^3.7"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows notifications to be sent to Slack",
+                "laravel/slack-notification-channel": "Required for sending notifications via Slack"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\FailedJobMonitor\\FailedJobMonitorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\FailedJobMonitor\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Get notified when a queued job fails",
+            "homepage": "https://github.com/spatie/laravel-failed-job-monitor",
+            "keywords": [
+                "job",
+                "laravel-failed-job-monitor",
+                "monitor",
+                "notify",
+                "queue",
+                "slack",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/laravel-failed-job-monitor/tree/4.3.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-19T07:00:54+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",

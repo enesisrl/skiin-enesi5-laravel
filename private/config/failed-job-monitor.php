@@ -5,8 +5,8 @@ return [
     /*
      * The notification that will be sent when a job fails.
      */
-    'notification' => \Spatie\FailedJobMonitor\Notification::class,
-
+    //'notification' => \Spatie\FailedJobMonitor\Notification::class,
+    'notification' => \Master\Foundation\Notifications\FailedJobsCustomNotification::class,
     /*
      * The notifiable to which the notification will be sent. The default
      * notifiable will use the mail and slack configuration specified
@@ -24,10 +24,10 @@ return [
     /*
      * The channels to which the notification will be sent.
      */
-    'channels' => ['slack'],
+    'channels' => ['mail'],
 
     'mail' => [
-        'to' => ['lavori@enesi.it'],
+        'to' => ['emanuele@enesi.it'],
     ],
 
     'slack' => [

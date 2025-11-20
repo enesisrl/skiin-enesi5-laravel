@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Jobs\Account\AccountExpired;
 use App\Jobs\Account\AccountReminder;
+use App\Jobs\Closure\Closure;
 use App\Jobs\PushNotifications\PushNotifications;
 use App\Jobs\Utilities\TrashedClear;
 use Illuminate\Console\Scheduling\Schedule;
@@ -37,6 +38,7 @@ class Kernel extends ConsoleKernel
             case 'production':
                 $schedule->command('queue:restart')->withoutOverlapping()->hourlyAt(10);
                 $schedule->command('backup:db')->withoutOverlapping(120)->dailyAt("00:00");
+                $schedule->job(Closure::class)->withoutOverlapping(120)->hourlyAt(15);
                 break;
             case 'local':
                 break;

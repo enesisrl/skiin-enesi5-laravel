@@ -25,7 +25,11 @@
         {
           "type": "vcs",
           "url": "https://github.com/enesisrl/laravel-master-otp"
-        }
+        },
+      {
+        "type": "vcs",
+        "url": "https://github.com/enesisrl/enesi-laravel-master-notifications-telegram"
+      }
     ],
     "require": {
         "php": "^8.2",
@@ -34,6 +38,7 @@
         "enesisrl/laravel-master-2fa": "^1.0",
         "enesisrl/laravel-master-addresses": "^2.0",
         "enesisrl/laravel-master-core": "^2.3",
+        "enesisrl/laravel-master-notifications-telegram": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/scout": "^10.13",
         "laravel/tinker": "^2.9",
@@ -43,6 +48,7 @@
         "simonschaufi/laravel-dkim": "^3.5",
         "spatie/geocoder": "^3.16",
         "spatie/laravel-backup": "^9.2",
+        "spatie/laravel-failed-job-monitor": "^4.3",
         "spatie/laravel-medialibrary": "^11.12",
         "spatie/laravel-permission": "^6.15",
         "spatie/laravel-sitemap": "^7.3",
